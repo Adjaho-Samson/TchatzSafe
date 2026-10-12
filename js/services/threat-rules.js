@@ -75,7 +75,7 @@
         return {
           valid: false,
           error:
-            'Le numéro doit commencer par le signe + suivi de l’indicatif du pays, par exemple +229. Après le +, seuls les chiffres, espaces, tirets et parenthèses sont acceptés.',
+            'Le numéro doit commencer par le signe + du format international, suivi de l’indicatif du pays, par exemple +229. Après le +, seuls les chiffres, espaces, tirets et parenthèses sont acceptés.',
         };
       const normalized = candidate.replace(/[\s().-]/g, '');
       if (!/^\+[1-9]\d{6,14}$/.test(normalized))

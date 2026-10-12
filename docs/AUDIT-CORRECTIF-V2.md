@@ -188,6 +188,37 @@ includeSubDomains`.
   indique précisément ce qui a été exécuté dans cet environnement, ce qui n'a pas pu l'être et
   pourquoi. Le présent fichier tient lieu d'inventaire.
 
+### A12 — P1 · Runtime des actions GitHub déprécié et Node.js 20 en fin de vie
+
+- Fichier : `.github/workflows/quality.yml`
+- Preuve : l'exécution réelle de la CI sur la PR #1 (`run 38307127132`) a produit l'avertissement
+  « Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on
+  Node.js 24 : actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4 ». Par
+  ailleurs le job utilisait `node-version: '20'`, dont la maintenance LTS s'est arrêtée en avril 2026.
+- Vérification préalable : `actions/checkout@v7`, `actions/setup-node@v7` et
+  `actions/upload-artifact@v7` sont les releases stables courantes (juillet-octobre 2026),
+  déclarent `using: node24`, et conservent les entrées utilisées ici (`node-version`, `cache`,
+  `name`, `path`, `retention-days`) — contrôlé via l'API GitHub avant modification.
+- Correction : les trois actions passent en `@v7` et `node-version` passe à `'22'`, la version sur
+  laquelle les 36 tests unitaires ont réellement été exécutés pendant cet audit.
+
+### A13 — Régression introduite par l'audit, détectée par la CI puis corrigée
+
+À signaler parce qu'elle illustre l'utilité du contrôle navigateur : la reformulation du message
+d'erreur de `validate('phone', …)` (A2) avait supprimé la mention « format international » du premier
+message. Or `tests/frontend.spec.cjs` saisit `numéro invalide` et attend ce texte :
+
+```
+await page.locator('#suspect-input').fill('numéro invalide');
+await expect(page.locator('#analyzer-error')).toContainText('format international');
+```
+
+Ce test n'était pas exécutable localement (A : environnement sans navigateur) ; c'est l'exécution CI
+de la PR #1 qui a révélé l'échec (étape 13, `npm run test:e2e`). Le message redevient « Le numéro
+doit commencer par le signe + **du format international**, suivi de l'indicatif du pays, par exemple
++229… », et une garde unitaire vérifie désormais que **tout** refus de numéro contient cette mention,
+pour protéger ce contrat d'interface même sans navigateur.
+
 ## Points contrôlés et jugés conformes (aucune correction nécessaire)
 
 Ces vérifications sont rapportées parce qu'elles font partie du périmètre demandé, pas pour gonfler

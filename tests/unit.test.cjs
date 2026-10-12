@@ -505,6 +505,20 @@ test('Un numéro dont l’indicatif est entre parenthèses est accepté et norma
     assert.equal(w.ThreatRules.validate('phone', input).value, '+2290123456789', input);
   for (const input of ['(00229) 01 23 45 67', '0123456789', '+0 12345678', '+229abc'])
     assert.equal(w.ThreatRules.validate('phone', input).valid, false, input);
+  // Contrat d’interface également vérifié par tests/frontend.spec.cjs : tout refus d’un
+  // numéro doit nommer le format international attendu, quel que soit le motif du refus.
+  for (const input of [
+    'numéro invalide',
+    '(00229) 01 23 45 67',
+    '0123456789',
+    '+0 12345678',
+    '+229abc',
+    '+1234567890123456',
+  ]) {
+    const result = w.ThreatRules.validate('phone', input);
+    assert.equal(result.valid, false, input);
+    assert(result.error.includes('format international'), input + ' → ' + result.error);
+  }
   const r = w.ThreatRules.analyze('phone', '(+999) 123 456 789');
   assert.equal(r.observations.length, 0);
   assert.equal(r.risk, null);
