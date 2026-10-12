@@ -36,7 +36,20 @@
       }
     },
     write(key, value) {
-      const raw = JSON.stringify(value);
+      let raw;
+      try {
+        raw = JSON.stringify(value);
+      } catch (_) {
+        raw = undefined;
+      }
+      if (typeof raw !== 'string') {
+        // Une valeur non sérialisable ne doit jamais être écrite telle quelle :
+        // elle produirait ensuite une donnée locale illisible.
+        notify(
+          'Cette donnée n’a pas pu être préparée pour la sauvegarde locale. Elle reste utilisable dans cette page, mais ne sera pas conservée.'
+        );
+        return false;
+      }
       memory.set(key, raw);
       try {
         root.localStorage.setItem(key, raw);

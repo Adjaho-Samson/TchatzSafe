@@ -17,6 +17,43 @@
       <div class="badge-grid" id="badges"></div>
     </section>
     <section class="data-section">
+      <h2>Comment sont calculés vos XP et vos badges</h2>
+      <p>
+        Ces repères mesurent votre parcours pédagogique sur cet appareil. Ils ne mesurent pas votre
+        niveau de sécurité et ne constituent pas une certification.
+      </p>
+      <ul class="check-list mt-4">
+        <li>
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#book"></use></svg
+          ><span><strong>10 XP</strong> par formation marquée comme étudiée, une seule fois.</span>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#help"></use></svg
+          ><span><strong>15 XP</strong> par quiz terminé, quel que soit le score obtenu.</span>
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#badge"></use></svg
+          ><span
+            ><strong>10 XP supplémentaires</strong> pour chaque quiz dont le meilleur score atteint
+            au moins 80 %. Ce bonus est accordé une seule fois par quiz, y compris lorsque vous
+            améliorez un résultat plus faible lors d’un nouvel essai.</span
+          >
+        </li>
+        <li>
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#chart"></use></svg
+          ><span
+            >Six niveaux pédagogiques, de <strong>Curieux</strong> (0 XP) à
+            <strong>Expert du quotidien</strong> (400 XP). Les badges se débloquent selon le nombre
+            de formations étudiées, le nombre de quiz terminés et les scores d’au moins 80 %.</span
+          >
+        </li>
+      </ul>
+      <p class="status-note mt-4">
+        Réinitialiser votre progression remet les XP, les niveaux et les badges à zéro sur cet
+        appareil.
+      </p>
+    </section>
+    <section class="data-section">
       <h2>Vos derniers quiz</h2>
       <div id="quiz-history"></div>
     </section>
@@ -39,7 +76,13 @@
           >Réinitialiser
         </button>
       </div>
-      <input id="import-progress" type="file" accept=".json,application/json" hidden />
+      <input
+        id="import-progress"
+        type="file"
+        accept=".json,application/json"
+        aria-label="Choisir un fichier JSON de progression à importer"
+        hidden
+      />
       <p class="data-message" id="progress-message" role="status"></p>
       <a class="text-link" href="confidentialite.html"
         >Comprendre le stockage local<svg class="icon" aria-hidden="true">

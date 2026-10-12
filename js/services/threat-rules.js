@@ -20,6 +20,17 @@
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase();
+  /**
+   * Forme comparée du nom d’hôte : minuscules, point final et préfixe « www. » retirés.
+   * Sert uniquement à comparer avec la liste de raccourcisseurs ; le nom lu dans l’adresse
+   * reste celui affiché à l’utilisateur.
+   */
+  const comparableHost = (hostname) => {
+    const host = String(hostname || '')
+      .toLowerCase()
+      .replace(/\.+$/, '');
+    return host.startsWith('www.') ? host.slice(4) : host;
+  };
   function validate(kind, value) {
     const text = String(value || '').trim();
     if (!text) return { valid: false, error: 'Renseignez le contenu à examiner.' };
@@ -55,18 +66,23 @@
       }
     }
     if (kind === 'phone') {
-      if (!/^\+[\d\s().-]+$/.test(text))
+      // Écriture courante « (+229) 01 23 45 67 » : des parenthèses autour de l’indicatif
+      // sont retirées avant le contrôle. Le signe + reste obligatoire en tête du numéro.
+      const wrapped = text.match(/^\(\s*([^()]+?)\s*\)\s*(.*)$/);
+      const candidate =
+        wrapped && wrapped[1].startsWith('+') ? `${wrapped[1]} ${wrapped[2]}`.trim() : text;
+      if (!/^\+[\d\s().-]+$/.test(candidate))
         return {
           valid: false,
           error:
-            'Utilisez le format international avec + et l’indicatif du pays. Seuls chiffres, espaces, tirets et parenthèses sont acceptés.',
+            'Le numéro doit commencer par le signe + suivi de l’indicatif du pays, par exemple +229. Après le +, seuls les chiffres, espaces, tirets et parenthèses sont acceptés.',
         };
-      const normalized = text.replace(/[\s().-]/g, '');
+      const normalized = candidate.replace(/[\s().-]/g, '');
       if (!/^\+[1-9]\d{6,14}$/.test(normalized))
         return {
           valid: false,
           error:
-            'Le format international doit contenir entre 7 et 15 chiffres après le +, sans commencer par 0.',
+            'Le format international doit contenir entre 7 et 15 chiffres après le +, et le premier chiffre de l’indicatif ne peut pas être 0.',
         };
       return { valid: true, value: normalized };
     }
@@ -102,7 +118,7 @@
         'Le texte avant le signe @ n’est pas le domaine de destination. Cette structure peut induire en erreur. Le domaine réel est indiqué ci-dessous.',
         url.hostname
       );
-    if (SHORTENERS.has(url.hostname.toLowerCase()))
+    if (SHORTENERS.has(comparableHost(url.hostname)))
       add(
         'shortener',
         'Destination masquée par un raccourcisseur',

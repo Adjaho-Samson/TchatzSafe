@@ -17,9 +17,18 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run generate
-      - run: git diff --exit-code -- '*.html' 'sitemap.xml' 'robots.txt' 'assets/icons.svg'
+      # `git diff` seul ignore les fichiers non suivis : une page générée mais jamais
+      # commitée passerait en CI alors qu’elle manquerait sur le site déployé.
+      - run: git add -A -- '*.html' 'sitemap.xml' 'robots.txt' 'assets/icons.svg'
+      - name: Vérifier que les fichiers générés sont à jour
+        run: git diff --cached --exit-code -- '*.html' 'sitemap.xml' 'robots.txt' 'assets/icons.svg'
+      - name: Vérifier qu’aucun artefact généré n’est oublié
+        run: test -z "$(git status --porcelain --untracked-files=all -- '*.html' 'sitemap.xml' 'robots.txt' 'assets/icons.svg')"
       - run: npm run check
       - run: npm test
+      - name: npm audit (indicatif)
+        run: npm audit --audit-level=high
+        continue-on-error: true
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4

@@ -11,8 +11,37 @@ const context = vm.createContext({ window, console });
 for (const f of ['sources', 'lessons', 'quizzes', 'curriculum', 'threats', 'glossary'])
   vm.runInContext(fs.readFileSync(path.join(root, 'js/data/' + f + '.js'), 'utf8'), context);
 const iconFile = fs.readFileSync(path.join(root, 'assets/icons.svg'), 'utf8');
+// En-têtes de sécurité servis par l’hébergeur. `frame-ancestors` n’est ignoré que dans une
+// méta CSP : il doit donc figurer dans l’en-tête HTTP et pas dans les pages.
+const vercel = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'));
+const globalHeaders = (vercel.headers.find((h) => h.source === '/(.*)') || {}).headers || [];
+const headerValue = (key) =>
+  (globalHeaders.find((h) => h.key.toLowerCase() === key.toLowerCase()) || {}).value;
+for (const key of [
+  'X-Content-Type-Options',
+  'Referrer-Policy',
+  'Permissions-Policy',
+  'X-Frame-Options',
+  'Strict-Transport-Security',
+  'Content-Security-Policy',
+])
+  if (!headerValue(key)) problems.push('vercel.json: en-tête de sécurité manquant ' + key);
+const cspHeader = headerValue('Content-Security-Policy') || '';
+if (!/frame-ancestors 'none'/.test(cspHeader))
+  problems.push("vercel.json: frame-ancestors 'none' absent de la CSP servie");
+const decodeEntities = (value) =>
+  value.replaceAll('&#x27;', "'").replaceAll('&quot;', '"').replaceAll('&amp;', '&');
 for (const file of files) {
   const html = fs.readFileSync(path.join(root, file), 'utf8');
+  const meta = (html.match(/http-equiv="Content-Security-Policy"[^>]*content="([^"]+)"/) || [])[1];
+  if (!meta) problems.push(file + ': méta CSP absente');
+  else {
+    const decoded = decodeEntities(meta);
+    if (/frame-ancestors/.test(decoded))
+      problems.push(file + ': frame-ancestors dans une méta CSP est ignoré par les navigateurs');
+    if (cspHeader !== `${decoded}; frame-ancestors 'none'`)
+      problems.push(file + ': CSP de la page différente de la CSP servie par l’hébergeur');
+  }
   if (!html.includes('lang="fr"')) problems.push(file + ': langue absente');
   if ((html.match(/<main\b/g) || []).length !== 1)
     problems.push(file + ': nombre de main invalide');
