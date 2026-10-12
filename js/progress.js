@@ -17,7 +17,7 @@
     },
     detective: { name: 'Détective', description: 'Terminer 5 quiz.' },
     'bon-reflexe': { name: 'Bon réflexe', description: 'Obtenir au moins 80 % à un quiz.' },
-    curieux: { name: 'Curieux du numérique', description: 'Étudier 5 thèmes.' },
+    curieux: { name: 'Curieux du numérique', description: 'Étudier 5 formations.' },
     assidu: { name: 'Assidu', description: 'Étudier 10 leçons.' },
     'expert-quiz': { name: 'Expert quiz', description: 'Terminer 8 quiz.' },
   };
@@ -69,7 +69,12 @@
   }
   function normalize(raw, strict = false) {
     const p = fresh();
-    if (raw === null || raw === undefined) return p;
+    if (raw === null || raw === undefined) {
+      // En import strict, un fichier sans contenu de progression doit être refusé :
+      // l’accepter remplacerait silencieusement les leçons et les scores de l’appareil.
+      if (strict) throw new Error('Le fichier ne contient pas une progression valide.');
+      return p;
+    }
     if (typeof raw !== 'object' || Array.isArray(raw)) {
       if (strict) throw new Error('Le fichier ne contient pas une progression valide.');
       return p;
