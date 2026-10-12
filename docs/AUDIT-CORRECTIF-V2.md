@@ -21,8 +21,17 @@ renvoie `ECONNRESET` (réseau restreint) et aucun navigateur système n'est inst
 test:e2e` a tout de même été lancé pour mesurer l'étendue réelle du blocage : **1 test sur 92 s'est
 exécuté et a réussi** — « Aucun backend n'est simulé par le serveur statique », le seul qui
 n'utilise que le fixture HTTP (`POST /api/reports` → 404, `GET /.git/HEAD` → 404). Les 91 autres
-échouent sur `browserType.launch: Executable doesn't exist`. **Les tests navigateur ne sont donc pas
-validés par cet audit** et ne sont présentés comme tels nulle part.
+échouent sur `browserType.launch: Executable doesn't exist`.
+
+**Cette limite a été levée par la CI** : la suite complète a été exécutée par le workflow GitHub sur
+la PR #1 (commit `1eccc4a`, run `38308129681`, job `115007021081`) et l'étape `npm run test:e2e`
+s'est terminée en **success** en 1 min 25 s. Le nombre de tests a été vérifié sans navigateur par
+`npx playwright test --list` → **Total: 92 tests in 1 file**. Playwright renvoyant un code non nul au
+premier échec, les 92 tests ont réussi. Les journaux détaillés n'ont pas pu être lus depuis cet
+environnement (`results-receiver.actions.githubusercontent.com` injoignable) : la conclusion provient
+de l'API GitHub, pas de la lecture du journal.
+
+C'est cette exécution CI qui a révélé la régression de libellé décrite en A13, invisible localement.
 
 ## Inventaire des problèmes confirmés
 
@@ -257,9 +266,12 @@ le bilan :
 
 ## Risques résiduels
 
-- **Tests navigateur non rejoués** : navigation clavier réelle, boucle de focus des modales,
-  responsive à 320/390/768/1024/1440 px, axe-core et mesures de performance restent à revalider sur
-  une machine disposant d'un navigateur. Les contrôles statiques ci-dessus ne les remplacent pas.
+- **Couverture navigateur** : les 92 tests fonctionnels et axe-core sont désormais validés par la CI
+  sur **Chromium** (Node 22). Restent non couverts : **Safari, Firefox, les lecteurs d'écran, le zoom
+  200 à 400 % et les appareils physiques**. Les mesures de performance de
+  `docs/preuves/performance.json` (FCP/LCP/CLS, réseau et CPU simulés) n'ont **pas été refaites**
+  pendant cet audit : elles ne font pas partie de la suite automatisée et restent des valeurs
+  ponctuelles de la livraison précédente.
 - **API récentes** : `Object.hasOwn` (Chrome 93+, Safari 15.4+) et `dialog.showModal()` (Firefox
   98+, Safari 15.4+). Sur un navigateur plus ancien, une bannière d'erreur explicite s'affiche, mais
   les interactions concernées deviennent indisponibles. Non testé ici.
@@ -276,12 +288,23 @@ le bilan :
 
 ## Opérations qui restent manuelles
 
-1. Relancer les tests navigateur : `npx playwright install --with-deps chromium && npm run
-test:e2e` sur une machine avec accès réseau, puis consigner la sortie réelle.
-2. Après déploiement, vérifier les en-têtes réellement servis :
+1. Les tests navigateur sont exécutés automatiquement par le workflow `Qualité TchatzSafe` à chaque
+   push et PR vers `master`/`main` : consulter la conclusion du job `frontend` avant fusion. Un
+   rejeu local (`npx playwright install --with-deps chromium && npm run test:e2e`) n'est nécessaire
+   que pour diagnostiquer un échec.
+2. Compléter sur d'autres moteurs, non couverts par la CI : Safari, Firefox, lecteur d'écran, zoom
+   200 à 400 % et smartphones physiques. Refaire une mesure de performance si les chiffres de
+   `docs/preuves/performance.json` doivent être cités à jour.
+3. Après déploiement, vérifier les en-têtes réellement servis :
    `curl -sI https://tchatzsafe.vercel.app/ | grep -iE 'content-security|x-frame|strict-transport'`.
-3. Revue accessibilité humaine : lecteur d'écran, zoom 200 à 400 %, smartphones physiques, Safari et
-   Firefox.
+   Non fait pendant l'audit : l'hôte `vercel.app` n'est pas joignable depuis cet environnement, alors
+   que l'aperçu Vercel de la PR était bien en `pass`.
 4. Contrôle ponctuel de la disponibilité des 14 URLs de `js/data/sources.js`.
 5. Décision d'exploitation sur HSTS `preload` et sur l'éventuelle suppression de `'unsafe-inline'`.
-6. Publication : aucun push ni déploiement n'a été effectué pendant cet audit.
+6. Publication — état réel au 12 octobre 2026 : la branche `arena/88b99af4-tchatzsafe` a été
+   **poussée** sur `github.com/Adjaho-Samson/TchatzSafe` et la **pull request #1** vers `master` a
+   été ouverte, après accord explicite du demandeur. Vercel a produit un **aperçu** de la PR
+   (statut `pass`). En revanche, la PR **n'est pas fusionnée** : `master` et le déploiement de
+   production Vercel ne contiennent donc **aucune** de ces corrections tant que la fusion n'est pas
+   effectuée. Les en-têtes de sécurité ajoutés dans `vercel.json` ne s'appliqueront qu'après cette
+   fusion et le redéploiement.
