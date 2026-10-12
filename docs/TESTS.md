@@ -1,5 +1,72 @@
 # Vérifications exécutées et limites
 
+## Re-vérification du 12 octobre 2026 — audit correctif
+
+Cette section distingue ce qui a été **réellement rejoué** pendant l’audit correctif de ce qui
+provient de la livraison précédente et n’a pas pu l’être. L’inventaire des défauts trouvés, leurs
+preuves et leurs corrections figure dans `AUDIT-CORRECTIF-V2.md`.
+
+Environnement de l’audit : Node.js **22.22.3**, npm **10.9.8**, Python **3.11.2**, aucun navigateur
+installé. Le dépôt ne contient qu’un commit (`aa5f20c`) : le commit de base `d07e2cf` mentionné plus
+bas n’existe pas dans cet historique et n’a pas pu être vérifié.
+
+| Contrôle                                 | Statut pendant l’audit                                                              |
+| ---------------------------------------- | ----------------------------------------------------------------------------------- |
+| `npm ci`                                 | **exécuté, réussi** — lockfile complet, 3 dépendances de développement              |
+| `npm run check`                          | **exécuté, réussi** — 14 pages, 964 références locales, 17 cours, 20 quiz, 6 fiches |
+| `npm test`                               | **exécuté, réussi** — 36/36 (31 historiques + 5 tests de régression de l’audit)     |
+| `npm run generate` ×2                    | **exécuté, réussi** — aucune différence à la seconde exécution : génération stable  |
+| `npm audit`                              | **exécuté** — `found 0 vulnerabilities`                                             |
+| Contraste WCAG                           | **vérifié par calcul** sur les paires texte/fond des deux thèmes — aucun échec AA   |
+| `npm run test:e2e` (92 tests navigateur) | **NON exécutable localement, puis VALIDÉ par la CI** — voir le détail ci-dessous    |
+| Mesures de performance / captures        | **non rejouées** — elles dépendent d’un navigateur                                  |
+| axe-core WCAG 2.1 AA                     | **non rejoué** — dépend de Chromium ; le contrôle statique ne le remplace pas       |
+| Disponibilité des 14 URLs externes       | **non revérifiée** — hôtes externes non autorisés dans cet environnement            |
+
+Les 92 tests navigateur et les mesures présentés ci-dessous proviennent donc de l’exécution
+antérieure et **ne doivent pas être cités comme vérifiés à la date de l’audit**. Ils restent à
+relancer avant toute publication.
+
+### Résultat navigateur obtenu par la CI GitHub (vérification effective)
+
+Localement, `npx playwright install chromium` échoue (`cdn.playwright.dev` injoignable, `ECONNRESET`)
+et aucun navigateur système n’est présent : 91 des 92 tests échouent sur `browserType.launch:
+Executable doesn’t exist`. Seul « Aucun backend n’est simulé par le serveur statique » a pu
+s’exécuter ici — `POST /api/reports` → **404** et `GET /.git/HEAD` → **404**, vérifiés réellement
+contre `tools/server.mjs`.
+
+Le nombre de tests a été vérifié sans navigateur par `npx playwright test --list` : **Total: 92
+tests in 1 file**.
+
+La suite complète a ensuite été exécutée par le workflow `Qualité TchatzSafe` sur la pull request
+[#1](https://github.com/Adjaho-Samson/TchatzSafe/pull/1), commit `1eccc4a` :
+
+| Élément                                       | Valeur constatée via l’API GitHub                         |
+| --------------------------------------------- | --------------------------------------------------------- |
+| Run / job                                     | `38308129681` / `115007021081`                            |
+| Conclusion du job                             | **success**                                               |
+| `npx playwright install --with-deps chromium` | success (20 s)                                            |
+| `npm run test:e2e`                            | **success**, 21:03:14 → 21:04:39 UTC, soit **1 min 25 s** |
+| `npm run check` / `npm test`                  | success / success (36 tests unitaires)                    |
+| Étapes de déterminisme ajoutées par l’audit   | success (`git diff --cached` et `git status --porcelain`) |
+| `actions/upload-artifact` (traces)            | skipped, car conditionné à `if: failure()`                |
+| Environnement                                 | Node.js 22, actions en `@v7` (runtime node24)             |
+
+Playwright termine avec un code de sortie non nul dès qu’un test échoue : la conclusion `success` de
+l’étape `test:e2e` signifie que **les 92 tests ont réussi**. Les traces de la console de test n’ont
+pas pu être lues depuis l’environnement d’audit (l’hôte `results-receiver.actions.githubusercontent.com`
+n’est pas joignable) : ce résultat s’appuie sur la conclusion d’étape renvoyée par l’API, pas sur la
+lecture du journal.
+
+Une première exécution de la CI (run `38307127132`) avait **échoué** à cette même étape : c’est elle
+qui a révélé la régression de libellé décrite dans `AUDIT-CORRECTIF-V2.md` (A13), corrigée depuis.
+
+Ce résultat couvre donc, sur Chromium et Node 22 : navigation clavier, boucle de focus des modales,
+responsive à 320/390/768/1024/1440 px, axe-core WCAG 2.1 AA, formulaires, quiz, brouillons et
+stockage. Il ne couvre toujours pas Safari, Firefox, les lecteurs d’écran ni les appareils physiques.
+
+---
+
 Dernière exécution complète : **12 octobre 2026**. Il s’agit de résultats locaux réellement exécutés, pas d’une promesse de conformité ou d’une CI GitHub déjà exécutée.
 
 ## Environnement

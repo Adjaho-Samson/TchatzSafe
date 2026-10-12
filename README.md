@@ -14,7 +14,7 @@ Plateforme de sensibilisation à la cybersécurité destinée au grand public, n
 - Les 6 conseils en dépliants, leurs liens profonds et les 13 définitions du glossaire sont conservés.
 - Sources, mission et politique de confidentialité accessibles.
 
-Vérification finale : **31 tests unitaires et 92 tests navigateur réussis**. Détails, conditions et limites dans `docs/TESTS.md`. La publication distante reste à effectuer avec un accès Git authentifié (voir `docs/PUBLICATION.md`).
+Contrôles réellement exécutés le **12 octobre 2026** : **36/36 tests unitaires**, contrôle structurel (14 pages, 964 références locales, 17 cours, 20 quiz, 6 fiches), `npm audit` **0 vulnérabilité**, génération déterministe et conformité AA des contrastes vérifiée par calcul — le tout dans l’environnement d’audit (Node 22.22.3, Python 3.11.2). Les **92 tests navigateur** (Chromium, axe-core WCAG 2.1 AA, responsive, clavier, formulaires) n’étaient pas exécutables localement faute de navigateur ; ils ont été **validés par la CI GitHub** sur la pull request #1, étape `npm run test:e2e` en succès en 1 min 25 s (run `38308129681`). Safari, Firefox, les lecteurs d’écran et les appareils physiques restent à tester manuellement. Détails, conditions et limites dans `docs/TESTS.md` ; inventaire des défauts corrigés et preuves dans `docs/AUDIT-CORRECTIF-V2.md`.
 
 ## Ce qui est une démonstration
 
@@ -95,6 +95,8 @@ Le dépôt public audité est `https://github.com/Adjaho-Samson/TchatzSafe`. Sa 
 
 Servir les pages à la racine, sans backend. Vercel : preset « Other », pas de build obligatoire, output `.`. Les pages générées sont déjà incluses. Ne pas activer une API de collecte sans satisfaire les préconditions documentées.
 
+Les en-têtes de sécurité sont définis dans `vercel.json` : `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options: DENY`, `Strict-Transport-Security` et une CSP incluant `frame-ancestors 'none'`. Cette dernière directive est **ignorée par les navigateurs dans une balise `<meta>`** : elle ne figure donc que dans l’en-tête HTTP, et les pages portent la même CSP sans `frame-ancestors`. `npm run check` vérifie cette cohérence pour les 14 pages. Après déploiement, contrôlez les en-têtes réellement servis (`curl -sI https://tchatzsafe.vercel.app/`). Le serveur de développement `tools/server.mjs` n’applique volontairement pas `X-Frame-Options`, pour rester affichable dans un aperçu intégré.
+
 **Une copie locale/une archive/une préparation de commit ne constitue pas un push GitHub.** La publication distante nécessite un accès d’écriture authentifié. Aucun mot de passe ou jeton ne doit être envoyé dans le chat.
 
 La procédure de reprise et publication se trouve dans [docs/PUBLICATION.md](docs/PUBLICATION.md). Le statut réel de la livraison et des vérifications se trouve dans [docs/TESTS.md](docs/TESTS.md).
@@ -102,6 +104,7 @@ La procédure de reprise et publication se trouve dans [docs/PUBLICATION.md](doc
 ## Documentation
 
 - [Audit initial et plan priorisé](docs/AUDIT-ET-PLAN.md)
+- [Audit correctif : inventaire, preuves et corrections](docs/AUDIT-CORRECTIF-V2.md)
 - [Architecture, contrats API et préconditions backend](docs/ARCHITECTURE-ET-API.md)
 - [Fonctionnalités opérationnelles et limites](docs/ETAT-FONCTIONNEL.md)
 - [Vérifications exécutées](docs/TESTS.md)

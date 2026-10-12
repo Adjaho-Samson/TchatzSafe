@@ -446,3 +446,114 @@ test('Une valeur réellement supprimée ailleurs n’est pas ressuscitée depuis
   data.delete('key');
   assert.equal(w.Store.read('key', null), null);
 });
+
+/* ------------------------------------------------------------------ *
+ * Régression — audit correctif du 12 octobre 2026.
+ * Chaque test correspond à un défaut reproduit avant correction.
+ * ------------------------------------------------------------------ */
+
+test('Un export sans contenu de progression est refusé et n’efface pas les données de l’appareil', () => {
+  const { w } = fixture();
+  w.Progress.markLessonCompleted('phishing');
+  w.Progress.markLessonCompleted('mots-de-passe');
+  w.Progress.saveQuizResult('debutant', 5, 5, []);
+  const before = JSON.stringify(w.Progress.get());
+  assert(before.includes('phishing'), 'précondition : progression réelle présente');
+  const invalid = [
+    null,
+    undefined,
+    { format: 'tchatzsafe-progress', version: 2 },
+    { format: 'tchatzsafe-progress', version: 2, progress: null },
+  ];
+  for (const value of invalid)
+    assert.throws(
+      () => w.Progress.importData(value),
+      /progression valide/,
+      String(JSON.stringify(value))
+    );
+  assert.equal(JSON.stringify(w.Progress.get()), before);
+  assert.equal(w.Progress.get().xp, 45);
+});
+
+test('Les raccourcisseurs restent reconnus avec www., en majuscules ou avec un point final', () => {
+  const { w } = fixture();
+  for (const url of [
+    'https://bit.ly/abc',
+    'https://www.bit.ly/abc',
+    'https://WWW.TINYURL.COM/abc',
+    'https://bit.ly./abc',
+    'https://www.t.co/abc',
+  ]) {
+    const r = w.ThreatRules.analyze('link', url);
+    assert(
+      r.observations.some((o) => o.id === 'shortener'),
+      url
+    );
+    assert.equal(r.risk, null, url);
+    assert.equal(r.canDetermineSafety, false, url);
+  }
+  // Aucun faux positif : un autre domaine contenant le nom d’un raccourcisseur.
+  for (const url of ['https://blog.bit.ly.example/abc', 'https://notbit.ly/abc']) {
+    const r = w.ThreatRules.analyze('link', url);
+    assert(!r.observations.some((o) => o.id === 'shortener'), url);
+  }
+});
+
+test('Un numéro dont l’indicatif est entre parenthèses est accepté et normalisé', () => {
+  const { w } = fixture();
+  for (const input of ['(+229) 01 23 45 67 89', '(+229)0123456789', '+229 (01) 23 45 67 89'])
+    assert.equal(w.ThreatRules.validate('phone', input).value, '+2290123456789', input);
+  for (const input of ['(00229) 01 23 45 67', '0123456789', '+0 12345678', '+229abc'])
+    assert.equal(w.ThreatRules.validate('phone', input).valid, false, input);
+  // Contrat d’interface également vérifié par tests/frontend.spec.cjs : tout refus d’un
+  // numéro doit nommer le format international attendu, quel que soit le motif du refus.
+  for (const input of [
+    'numéro invalide',
+    '(00229) 01 23 45 67',
+    '0123456789',
+    '+0 12345678',
+    '+229abc',
+    '+1234567890123456',
+  ]) {
+    const result = w.ThreatRules.validate('phone', input);
+    assert.equal(result.valid, false, input);
+    assert(result.error.includes('format international'), input + ' → ' + result.error);
+  }
+  const r = w.ThreatRules.analyze('phone', '(+999) 123 456 789');
+  assert.equal(r.observations.length, 0);
+  assert.equal(r.risk, null);
+  assert(!Object.hasOwn(r, 'owner'));
+});
+
+test('Une valeur non sérialisable n’est pas écrite et ne corrompt pas la donnée précédente', () => {
+  const { w, data, events } = fixture();
+  w.Store.write('key', { ok: true });
+  const before = data.get('key');
+  const circular = {};
+  circular.self = circular;
+  assert.equal(w.Store.write('key', circular), false);
+  assert.equal(w.Store.write('key', { big: 10n }), false);
+  assert.equal(data.get('key'), before);
+  assert(w.Store.warning.length > 0);
+  assert(events.length > 0);
+  assert.deepEqual(plain(w.Store.read('key', null)), { ok: true });
+  assert.equal(w.Store.persistent, true);
+});
+
+test('La CSP servie ajoute frame-ancestors sans le duplicer dans les pages', () => {
+  const vercel = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'));
+  const headers = vercel.headers.find((h) => h.source === '/(.*)').headers;
+  const csp = headers.find((h) => h.key === 'Content-Security-Policy').value;
+  assert(csp.includes("frame-ancestors 'none'"));
+  assert(headers.some((h) => h.key === 'X-Frame-Options'));
+  assert(headers.some((h) => h.key === 'Strict-Transport-Security'));
+  for (const file of fs.readdirSync(root).filter((f) => f.endsWith('.html'))) {
+    const html = fs.readFileSync(path.join(root, file), 'utf8');
+    const meta = html.match(/http-equiv="Content-Security-Policy"[^>]*content="([^"]+)"/);
+    assert(meta, file);
+    assert(
+      !meta[1].includes('frame-ancestors'),
+      file + ' : frame-ancestors est ignoré dans une méta CSP'
+    );
+  }
+});
