@@ -17,8 +17,12 @@ sans avoir été exécuté ici.
 | Chromium | **absent**        | Playwright 1.64.0                                           |
 
 `npx playwright install chromium` échoue dans cet environnement : l'hôte `cdn.playwright.dev`
-renvoie `ECONNRESET` (réseau restreint) et aucun navigateur système n'est installé. **Les tests
-navigateur n'ont donc pas pu être rejoués** ; ils ne sont pas présentés comme vérifiés.
+renvoie `ECONNRESET` (réseau restreint) et aucun navigateur système n'est installé. `npm run
+test:e2e` a tout de même été lancé pour mesurer l'étendue réelle du blocage : **1 test sur 92 s'est
+exécuté et a réussi** — « Aucun backend n'est simulé par le serveur statique », le seul qui
+n'utilise que le fixture HTTP (`POST /api/reports` → 404, `GET /.git/HEAD` → 404). Les 91 autres
+échouent sur `browserType.launch: Executable doesn't exist`. **Les tests navigateur ne sont donc pas
+validés par cet audit** et ne sont présentés comme tels nulle part.
 
 ## Inventaire des problèmes confirmés
 
@@ -212,6 +216,11 @@ le bilan :
 - **Génération déterministe** : `npm run generate` (Python + Prettier) reproduit les HTML à
   l'identique. Attention : `build-pages.py` **seul** produit un HTML non formaté très différent du
   HTML versionné — la comparaison de la CI n'a de sens qu'après Prettier, ce que fait bien le script.
+- **Aucune API fictive ni exposition du dépôt** : vérifié réellement par le seul test e2e exécutable
+  ici — `POST /api/reports` renvoie **404** (« Aucune API disponible. ») et `GET /.git/HEAD` renvoie
+  **404**, contre `tools/server.mjs`. Le serveur bloque aussi `/docs`, `/tools`, `/templates`,
+  `/tests`, `/node_modules` et tout segment commençant par un point (contrôlé par `curl` :
+  `/docs/TESTS.md` → 404, `/.git/config` → 404, `/templates/pages/index.html` → 404).
 - **Dépendances** : 3 dépendances de développement uniquement, aucune dépendance runtime ajoutée par
   cet audit ; `package-lock.json` complet et `npm ci` fonctionnel ; `npm audit` → 0 vulnérabilité.
 

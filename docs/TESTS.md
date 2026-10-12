@@ -18,8 +18,12 @@ bas n’existe pas dans cet historique et n’a pas pu être vérifié.
 | `npm run generate` ×2                    | **exécuté, réussi** — aucune différence à la seconde exécution : génération stable  |
 | `npm audit`                              | **exécuté** — `found 0 vulnerabilities`                                             |
 | Contraste WCAG                           | **vérifié par calcul** sur les paires texte/fond des deux thèmes — aucun échec AA   |
-| `npm run test:e2e` (92 tests navigateur) | **NON REJOUÉ** — `npx playwright install chromium` échoue (`cdn.playwright.dev`     |
-|                                          | injoignable, `ECONNRESET`) et aucun navigateur système n’est présent                |
+| `npm run test:e2e` (92 tests navigateur) | **1/92 exécuté, 91 bloqués** — `npx playwright install chromium` échoue             |
+|                                          | (`cdn.playwright.dev` injoignable, `ECONNRESET`) et aucun navigateur système n’est  |
+|                                          | présent : 91 tests échouent sur `browserType.launch: Executable doesn’t exist`.     |
+|                                          | Le seul test passé est « Aucun backend n’est simulé par le serveur statique », qui  |
+|                                          | n’utilise que le fixture HTTP : `POST /api/reports` → **404** et `GET /.git/HEAD` → |
+|                                          | **404**, vérifiés réellement contre `tools/server.mjs`                              |
 | Mesures de performance / captures        | **non rejouées** — elles dépendent d’un navigateur                                  |
 | axe-core WCAG 2.1 AA                     | **non rejoué** — dépend de Chromium ; le contrôle statique ne le remplace pas       |
 | Disponibilité des 14 URLs externes       | **non revérifiée** — hôtes externes non autorisés dans cet environnement            |
