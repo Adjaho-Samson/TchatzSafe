@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TchatzSafe — Les arnaques évoluent. Votre vigilance aussi.</title>
+    <meta
+      name="description"
+      content="Apprenez à reconnaître les menaces numériques, testez vos réflexes et découvrez comment protéger vos données."
+    />
+    <meta name="theme-color" content="#0c0d0f" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; img-src &#x27;self&#x27; data: blob:; font-src &#x27;self&#x27;; connect-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27;"
+    />
+    <meta
+      property="og:title"
+      content="TchatzSafe — Les arnaques évoluent. Votre vigilance aussi."
+    />
+    <meta
+      property="og:description"
+      content="Apprenez à reconnaître les menaces numériques, testez vos réflexes et découvrez comment protéger vos données."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <link rel="canonical" href="https://tchatzsafe.vercel.app/" />
+    <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin />
+    <script src="js/theme-init.js"></script>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <script src="js/services/storage.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/data/sources.js" defer></script>
+    <script src="js/data/lessons.js" defer></script>
+    <script src="js/data/quizzes.js" defer></script>
+    <script src="js/data/curriculum.js" defer></script>
+    <script src="js/progress.js" defer></script>
+    <script src="js/components.js" defer></script>
+    <script src="js/data/threats.js" defer></script>
+    <script src="js/quiz.js" defer></script>
+    <script src="js/pages/home.js" defer></script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Aller au contenu principal</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo" aria-label="TchatzSafe, accueil"
+          ><svg class="icon" aria-hidden="true" focusable="false">
+            <use href="assets/icons.svg#shield"></use></svg
+          ><span class="brand-word">Tchatz<span>Safe</span></span></a
+        >
+        <nav class="nav-desktop" aria-label="Navigation principale">
+          <a href="index.html" class="nav-link active" aria-current="page">Accueil</a
+          ><a href="menaces.html" class="nav-link">Menaces</a
+          ><a href="apprendre.html" class="nav-link">Apprendre</a
+          ><a href="quiz.html" class="nav-link">Quiz</a
+          ><a href="conseils.html" class="nav-link">Conseils</a>
+        </nav>
+        <div class="header-actions">
+          <a href="progression.html" class="btn btn-secondary progress-link"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#user"></use></svg
+            >Ma progression</a
+          ><a href="analyser.html" class="btn btn-primary"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#scan"></use></svg
+            >Analyser une menace</a
+          ><button
+            class="icon-button theme-toggle"
+            data-theme-toggle
+            type="button"
+            aria-label="Activer le thème clair"
+          >
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#sun"></use>
+            </svg></button
+          ><button
+            type="button"
+            class="icon-button menu-toggle"
+            aria-label="Ouvrir le menu"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+          >
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#menu"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <dialog id="mobile-menu" class="mobile-menu" aria-labelledby="mobile-menu-title">
+        <h2 id="mobile-menu-title" class="sr-only">Menu de navigation</h2>
+        <div class="mobile-menu-top">
+          <a href="index.html" class="logo" aria-label="TchatzSafe, accueil"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#shield"></use></svg
+            ><span class="brand-word">Tchatz<span>Safe</span></span></a
+          ><button type="button" class="icon-button" data-close-menu aria-label="Fermer le menu">
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#close"></use>
+            </svg>
+          </button>
+        </div>
+        <nav aria-label="Navigation mobile">
+          <a href="index.html" class="nav-link active" aria-current="page">Accueil</a
+          ><a href="menaces.html" class="nav-link">Menaces</a
+          ><a href="apprendre.html" class="nav-link">Apprendre</a
+          ><a href="quiz.html" class="nav-link">Quiz</a
+          ><a href="conseils.html" class="nav-link">Conseils</a
+          ><a href="glossaire.html" class="nav-link">Glossaire</a
+          ><a href="progression.html" class="nav-link">Ma progression</a
+          ><a href="signaler.html" class="nav-link">Signalement · démo</a>
+        </nav>
+        <div class="mobile-menu-bottom">
+          <a href="analyser.html" class="btn btn-primary btn-block"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#scan"></use></svg
+            >Analyser une menace</a
+          >
+          <p>Gratuit. Sans compte. À votre rythme.</p>
+        </div>
+      </dialog>
+    </header>
+    <div class="storage-banner" id="storage-banner" role="status" hidden>
+      <div class="container">
+        <p></p>
+        <button type="button" class="btn btn-secondary btn-sm mt-4" data-export-session hidden>
+          Exporter la progression de cette page
+        </button>
+      </div>
+    </div>
+    <div class="storage-banner" id="app-error-banner" role="alert" hidden>
+      <div class="container">
+        <p>
+          Un élément nécessaire de la page n’a pas pu être chargé. Les interactions peuvent être
+          indisponibles. Aucun envoi de formulaire n’a eu lieu.
+        </p>
+        <button type="button" class="btn btn-secondary btn-sm mt-4" data-reload-page>
+          Actualiser la page
+        </button>
+      </div>
+    </div>
+    <noscript
+      ><div class="noscript-message">
+        Les interactions (cours, quiz et formulaires) nécessitent JavaScript. Aucun formulaire n’est
+        envoyé sans JavaScript.
+        <nav aria-label="Navigation sans JavaScript">
+          <a href="index.html">Accueil</a><a href="conseils.html">Conseils</a
+          ><a href="a-propos.html">Mission</a><a href="sources.html">Sources</a
+          ><a href="confidentialite.html">Confidentialité</a>
+        </nav>
+      </div></noscript
+    >
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <p class="eyebrow">LA CYBERSÉCURITÉ, À PORTÉE DE TOUS</p>
+            <h1 id="hero-title">
+              Les arnaques<br />évoluent.<br /><span>Votre vigilance aussi.</span>
+            </h1>
+            <p class="hero-lead">
+              Apprenez à reconnaître les menaces numériques, testez vos réflexes et découvrez
+              comment protéger vos données.
+            </p>
+            <div class="hero-actions">
+              <a href="analyser.html" class="btn btn-primary btn-lg"
+                ><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#scan"></use></svg
+                >Analyser une menace<svg class="icon" aria-hidden="true">
+                  <use href="assets/icons.svg#arrow"></use></svg></a
+              ><a href="apprendre.html" class="btn btn-secondary btn-lg"
+                >Apprendre à se protéger<svg class="icon" aria-hidden="true">
+                  <use href="assets/icons.svg#arrow"></use></svg
+              ></a>
+            </div>
+            <p class="hero-note">
+              <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#lock"></use></svg
+              >Gratuit, sans inscription. Progressez à votre rythme.
+            </p>
+          </div>
+          <div class="hero-art" aria-label="Illustration de la vigilance numérique">
+            <img
+              src="assets/illustrations/vigilance.svg"
+              alt=""
+              width="640"
+              height="560"
+              fetchpriority="high"
+            />
+            <div class="floating-note">
+              <div class="floating-note-top">
+                <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#alert"></use></svg
+                >UN MESSAGE. UN SIGNAL D’ALERTE.
+              </div>
+              <p>« Envoyez votre code PIN pour<br />annuler le transfert. »</p>
+              <span>Exemple fictif · Un code secret ne se partage pas.</span>
+            </div>
+            <span class="art-caption"
+              ><span class="dot"></span>COMPRENDRE / RECONNAÎTRE / AGIR</span
+            >
+          </div>
+        </div>
+      </section>
+      <div class="trust-strip">
+        <div class="container trust-inner">
+          <div class="trust-item">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#book"></use></svg>Des
+            explications simples, sans jargon
+          </div>
+          <div class="trust-item">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#lock"></use></svg>Une
+            progression enregistrée sur votre appareil
+          </div>
+          <div class="trust-item">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#globe"></use></svg
+            >Pensé pour les usages du quotidien en Afrique
+          </div>
+        </div>
+      </div>
+      <section class="section" aria-labelledby="home-threats-title">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">01 / RECONNAÎTRE LES MENACES</p>
+              <h2 id="home-threats-title">
+                Connaître les pièges.<br />C’est déjà mieux se protéger.
+              </h2>
+            </div>
+            <p>
+              Un SMS, une offre d’emploi, un transfert Mobile Money… Les arnaques se cachent dans
+              nos habitudes. Apprenez à voir les signes d’alerte.
+            </p>
+          </div>
+          <div class="cards-grid" id="home-threats">
+            <p class="status-note">Chargement des catégories pédagogiques…</p>
+          </div>
+          <div class="section-bottom">
+            <p>Des exemples fictifs pour comprendre. Des sources publiques pour vérifier.</p>
+            <a href="menaces.html" class="text-link"
+              >Explorer la bibliothèque<svg class="icon" aria-hidden="true">
+                <use href="assets/icons.svg#arrow"></use></svg
+            ></a>
+          </div>
+        </div>
+      </section>
+      <section class="section section-alt featured-courses" aria-labelledby="home-courses-title">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">02 / APPRENDRE À SE PROTÉGER</p>
+              <h2 id="home-courses-title">De petits cours.<br />De grands réflexes.</h2>
+            </div>
+            <a href="apprendre.html" class="text-link"
+              >Toutes les formations<svg class="icon" aria-hidden="true">
+                <use href="assets/icons.svg#arrow"></use></svg
+            ></a>
+          </div>
+          <div class="cards-grid" id="home-courses">
+            <p class="status-note">Chargement des formations…</p>
+          </div>
+          <div class="section-bottom">
+            <p>
+              <span data-course-count>17</span> formations · Débutant, intermédiaire et avancé ·
+              Sans prérequis techniques
+            </p>
+            <a href="progression.html" class="text-link"
+              >Retrouver ma progression<svg class="icon" aria-hidden="true">
+                <use href="assets/icons.svg#arrow"></use></svg
+            ></a>
+          </div>
+        </div>
+      </section>
+      <section class="section" aria-labelledby="home-quiz-title">
+        <div class="container quiz-showcase">
+          <div class="quiz-showcase-copy">
+            <p class="eyebrow">03 / TESTER SES RÉFLEXES</p>
+            <h2 id="home-quiz-title">Une minute de réflexion.<br />Un piège en moins.</h2>
+            <p>
+              Face à un message suspect, saurez-vous prendre la bonne décision ? Essayez trois
+              situations du quotidien. Chaque réponse vous apprend quelque chose.
+            </p>
+            <a href="quiz.html" class="text-link"
+              >Découvrir tous les quiz<svg class="icon" aria-hidden="true">
+                <use href="assets/icons.svg#arrow"></use></svg
+            ></a>
+          </div>
+          <div class="quiz-demo-shell">
+            <div class="quiz-demo-top">
+              <span class="tag tag-red">LE DÉFI DES BONS RÉFLEXES</span
+              ><span>EXEMPLES FICTIFS</span>
+            </div>
+            <div id="home-quiz-root"><p class="status-note">Chargement de l’exercice…</p></div>
+          </div>
+        </div>
+      </section>
+      <section class="section section-alt" aria-labelledby="prevention-title">
+        <div class="container prevention-grid">
+          <div class="prevention-intro">
+            <p class="eyebrow">04 / LES BONS GESTES</p>
+            <h2 id="prevention-title">Un doute ?<br />Commencez par une pause.</h2>
+            <p>
+              Vous n’avez pas besoin d’être informaticien pour mieux vous protéger. Quelques
+              habitudes font la différence.
+            </p>
+            <a href="conseils.html" class="text-link"
+              >Tous les conseils pratiques<svg class="icon" aria-hidden="true">
+                <use href="assets/icons.svg#arrow"></use></svg
+            ></a>
+          </div>
+          <div class="prevention-list">
+            <article class="prevention-item">
+              <span class="prevention-number">01</span>
+              <div>
+                <h3>Vérifiez avant de cliquer.</h3>
+                <p>
+                  Retrouvez le service dans son application ou sur son site officiel. Un logo et un
+                  cadenas HTTPS ne prouvent pas l’honnêteté d’un message.
+                </p>
+              </div>
+            </article>
+            <article class="prevention-item">
+              <span class="prevention-number">02</span>
+              <div>
+                <h3>Gardez vos codes pour vous.</h3>
+                <p>
+                  Votre PIN et vos codes de connexion sont des secrets. Ne les envoyez pas à un
+                  interlocuteur, même s’il prétend être du support.
+                </p>
+              </div>
+            </article>
+            <article class="prevention-item">
+              <span class="prevention-number">03</span>
+              <div>
+                <h3>Ne décidez pas sous pression.</h3>
+                <p>
+                  Une menace urgente, un gain garanti ou des frais imprévus ? Prenez le temps de
+                  vérifier avec des coordonnées trouvées indépendamment.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="section" aria-labelledby="mission-title">
+        <div class="container">
+          <div class="mission-panel">
+            <div>
+              <p class="eyebrow">NOTRE MISSION</p>
+              <h2 id="mission-title">
+                La sécurité numérique<br />ne doit pas être<br />un privilège.
+              </h2>
+            </div>
+            <div class="mission-text">
+              <p>
+                Le numérique fait partie de nos vies. Les risques aussi. TchatzSafe rend les bons
+                réflexes accessibles à chacun, sans jargon et sans culpabiliser.
+              </p>
+              <p>
+                Des situations proches du quotidien africain, des explications concrètes et de la
+                pratique : pour protéger ses données, ses proches et son argent.
+              </p>
+              <a href="a-propos.html" class="text-link"
+                >Pourquoi TchatzSafe existe<svg class="icon" aria-hidden="true">
+                  <use href="assets/icons.svg#arrow"></use></svg></a
+              ><a href="sources.html" class="text-link"
+                >Nos sources et nos limites<svg class="icon" aria-hidden="true">
+                  <use href="assets/icons.svg#arrow"></use></svg
+              ></a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo" aria-label="TchatzSafe, accueil"
+              ><svg class="icon" aria-hidden="true" focusable="false">
+                <use href="assets/icons.svg#shield"></use></svg
+              ><span class="brand-word">Tchatz<span>Safe</span></span></a
+            >
+            <p>
+              Comprendre les pièges numériques.<br />Adopter les bons réflexes, chaque jour.<br />La
+              cybersécurité, accessible à tous.
+            </p>
+            <p class="footer-privacy">APPRENDRE, PAS ÊTRE SURVEILLÉ.</p>
+          </div>
+          <div class="footer-col">
+            <h2>Explorer</h2>
+            <ul>
+              <li><a href="menaces.html">Bibliothèque des menaces</a></li>
+              <li><a href="apprendre.html">Les formations</a></li>
+              <li><a href="quiz.html">Les quiz</a></li>
+              <li><a href="conseils.html">Conseils pratiques</a></li>
+              <li><a href="glossaire.html">Glossaire</a></li>
+              <li><a href="progression.html">Ma progression</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h2>TchatzSafe</h2>
+            <ul>
+              <li><a href="a-propos.html">Notre mission</a></li>
+              <li><a href="analyser.html">Analyseur · démo</a></li>
+              <li><a href="signaler.html">Signalement · démo</a></li>
+              <li><a href="sources.html">Sources et fiabilité</a></li>
+              <li><a href="confidentialite.html">Confidentialité</a></li>
+              <li><a href="moderation.html">Modération · démo locale</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h2>Sources utiles</h2>
+            <ul>
+              <li>
+                <a
+                  href="https://www.cybermalveillance.gouv.fr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Cybermalveillance.gouv.fr<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+              <li>
+                <a href="https://www.cnil.fr/" target="_blank" rel="noopener noreferrer"
+                  >CNIL<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+              <li>
+                <a href="https://cyber.gouv.fr/" target="_blank" rel="noopener noreferrer"
+                  >ANSSI<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+              <li>
+                <a href="https://www.cnin.bj/" target="_blank" rel="noopener noreferrer"
+                  >CNIN · Bénin<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            Un outil éducatif, pas une garantie de sécurité. En cas d’incident, contactez le service
+            concerné ou l’autorité compétente de votre pays.
+          </p>
+          <p>Copyright <span data-year>2026</span> TchatzSafe</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

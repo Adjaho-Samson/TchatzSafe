@@ -1,0 +1,117 @@
+<div class="page-header">
+  <div class="container">
+    <p class="eyebrow">CONFIDENTIALITÉ</p>
+    <h1>Vos données.<br />Des limites clairement expliquées.</h1>
+    <p>Politique de la version statique de TchatzSafe. Dernière mise à jour : 12 octobre 2026.</p>
+  </div>
+</div>
+<section class="page-content">
+  <div class="container prose">
+    <h2>1. Ce qui reste sur votre appareil</h2>
+    <ul>
+      <li>La préférence de thème : clé <code>tchatzsafe_theme</code>.</li>
+      <li>
+        Les leçons étudiées, résultats de quiz, meilleurs scores, notions et badges : clé historique
+        <code>tchatzsafe_progress</code>.
+      </li>
+      <li>
+        Les brouillons de signalement, uniquement après votre accord : clé
+        <code>tchatzsafe_report_drafts_v1</code>.
+      </li>
+    </ul>
+    <p>
+      Ces données utilisent le stockage du navigateur, pas un compte TchatzSafe. Elles ne sont pas
+      chiffrées séparément et peuvent être lues par une personne utilisant le même profil de
+      navigateur. Évitez d’enregistrer des brouillons sensibles sur un appareil partagé.
+    </p>
+    <h2>2. L’analyseur et les preuves</h2>
+    <p>
+      Le texte de l’analyseur est traité dans la page : il n’est ni sauvegardé, ni visité, ni envoyé
+      à un service externe. Il disparaît lorsque vous l’effacez ou quittez la page. Aucune
+      consultation automatique des liens soumis n’a lieu.
+    </p>
+    <p>
+      Une image de preuve sélectionnée est prévisualisée localement. Ni les octets du fichier ni son
+      nom ne sont conservés. Seuls son type et sa taille peuvent figurer dans le brouillon pour
+      indiquer qu’une preuve a été sélectionnée. Vous devrez la sélectionner à nouveau dans une
+      éventuelle future version connectée.
+    </p>
+    <h2>3. Durée et suppression</h2>
+    <p>
+      Les brouillons expirent 30 jours après leur création. Ils sont purgés à la prochaine ouverture
+      d’une page qui les lit ; un site statique ne peut pas supprimer des données lorsque votre
+      navigateur est fermé. Ils peuvent être supprimés avant cette échéance depuis « Signalement »
+      ou ci-dessous.
+    </p>
+    <p>
+      La progression et le thème restent jusqu’à leur suppression par vous ou par le navigateur.
+      Exportez votre progression si vous souhaitez en garder une copie. Les exports téléchargés
+      doivent être supprimés séparément sur votre appareil.
+    </p>
+    <div class="data-actions">
+      <a href="progression.html" class="btn btn-secondary"
+        >Gérer ma progression<svg class="icon" aria-hidden="true">
+          <use href="assets/icons.svg#arrow"></use></svg></a
+      ><button type="button" class="btn btn-secondary" id="clear-private-drafts">
+        <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#trash"></use></svg
+        >Supprimer mes brouillons
+      </button>
+    </div>
+    <p id="privacy-message" class="data-message" role="status"></p>
+    <h2>4. Hébergement et ressources externes</h2>
+    <p>
+      Le chargement du site implique des requêtes vers l’hébergeur, qui peut traiter des
+      informations techniques comme votre adresse IP, l’agent utilisateur et les fichiers demandés.
+      Aucun outil publicitaire, mesure d’audience ou police chargée depuis un CDN n’est intégré à
+      cette version. Les polices et illustrations sont servies avec le site.
+    </p>
+    <p>
+      Les liens vers nos sources n’envoient pas votre saisie : ils ouvrent simplement le site
+      choisi, à votre initiative. Ce site applique sa propre politique de confidentialité. Ne copiez
+      jamais une donnée privée dans un service d’analyse externe sans vérifier ses conditions et
+      consentir explicitement à cette transmission.
+    </p>
+    <h2>5. Signalements et protection contre les abus</h2>
+    <p>
+      Aucun brouillon n’est publié, transmis à une équipe, ajouté à une base de réputation ou
+      présenté comme une fraude vérifiée. La modération disponible est un atelier local, pas un
+      espace d’administration sécurisé.
+    </p>
+    <p>
+      Des limites de format, de taille et de fréquence évitent certaines erreurs dans le navigateur.
+      Elles sont contournables et ne remplacent pas des protections serveur. Une version connectée
+      devra prévoir l’authentification, des contrôles de fichiers, la prévention des abus, des accès
+      restreints, un journal d’audit et des durées de conservation justifiées.
+    </p>
+    <h2>6. Avant une version connectée</h2>
+    <p>
+      Le responsable du traitement, son contact, les finalités, bases légales, destinataires,
+      droits, durées et modalités de recours devront être renseignés et validés selon les pays
+      concernés avant tout déploiement d’une API collectant des données. Cette page ne constitue pas
+      une promesse de conformité d’un backend qui n’existe pas.
+    </p>
+    <div class="notice neutral">
+      <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#lock"></use></svg>
+      <div>
+        <strong>Pas d’envoi caché.</strong>
+        <p>
+          Dans cette version, aucun endpoint de réception ou service tiers d’analyse n’est
+          configuré. Le navigateur n’est pas autorisé à effectuer des connexions API par la
+          politique CSP du site.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<dialog class="modal" id="privacy-clear-dialog" aria-labelledby="privacy-clear-title">
+  <h2 id="privacy-clear-title">Supprimer tous les brouillons ?</h2>
+  <p>
+    Ils seront supprimés de ce navigateur. Votre progression et votre thème ne seront pas modifiés.
+  </p>
+  <div class="modal-actions">
+    <button type="button" class="btn btn-secondary" data-cancel-private-clear>Annuler</button
+    ><button type="button" class="btn btn-primary" id="confirm-private-clear">
+      Supprimer les brouillons
+    </button>
+  </div>
+</dialog>

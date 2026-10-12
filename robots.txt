@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /moderation.html
+Disallow: /templates/
+Disallow: /tools/
+Disallow: /tests/
+Sitemap: https://tchatzsafe.vercel.app/sitemap.xml

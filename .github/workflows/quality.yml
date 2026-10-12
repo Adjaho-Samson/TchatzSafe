@@ -1,0 +1,30 @@
+name: Qualité TchatzSafe
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+permissions:
+  contents: read
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - run: npm run generate
+      - run: git diff --exit-code -- '*.html' 'sitemap.xml' 'robots.txt' 'assets/icons.svg'
+      - run: npm run check
+      - run: npm test
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: traces-de-test
+          path: test-results/
+          retention-days: 7

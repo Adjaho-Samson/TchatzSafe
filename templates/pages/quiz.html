@@ -1,0 +1,75 @@
+<div id="quiz-catalog">
+  <div class="page-header">
+    <div class="container">
+      <p class="eyebrow">TESTER SES RÉFLEXES</p>
+      <h1>La théorie, c’est bien.<br />Les bons réflexes, c’est mieux.</h1>
+      <p>
+        Choisissez un quiz et entraînez-vous avec des situations fictives. Une explication vous
+        accompagne à chaque réponse, même en cas d’erreur.
+      </p>
+    </div>
+  </div>
+  <section class="page-content">
+    <div class="container">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <label class="sr-only" for="quiz-search">Rechercher un quiz</label
+          ><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#search"></use></svg
+          ><input
+            class="search-input"
+            id="quiz-search"
+            type="search"
+            maxlength="100"
+            autocomplete="off"
+            placeholder="Quel sujet souhaitez-vous tester ?"
+          />
+        </div>
+        <div class="filter-row" role="group" aria-label="Niveau du quiz">
+          <button class="filter-btn" type="button" data-quiz-level="all" aria-pressed="true">
+            Tous</button
+          ><button class="filter-btn" type="button" data-quiz-level="débutant" aria-pressed="false">
+            Débutant</button
+          ><button
+            class="filter-btn"
+            type="button"
+            data-quiz-level="intermédiaire"
+            aria-pressed="false"
+          >
+            Intermédiaire</button
+          ><button class="filter-btn" type="button" data-quiz-level="avancé" aria-pressed="false">
+            Avancé
+          </button>
+        </div>
+      </div>
+      <p id="quiz-count" class="results-count" aria-live="polite"></p>
+      <div class="cards-grid quiz-catalog" id="quiz-grid">
+        <p class="status-note">Chargement des quiz…</p>
+      </div>
+    </div>
+  </section>
+</div>
+<div id="quiz-player" hidden>
+  <div class="page-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Fil d’Ariane">
+        <a href="quiz.html">Tous les quiz</a
+        ><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#chevron"></use></svg
+        ><span>Entraînement</span>
+      </nav>
+      <p class="eyebrow">MISE EN PRATIQUE</p>
+      <h1 id="quiz-heading">Votre quiz</h1>
+      <p id="quiz-description"></p>
+    </div>
+  </div>
+  <section class="page-content">
+    <div class="container quiz-layout">
+      <div class="quiz-stage" id="quiz-root">
+        <p class="status-note">Chargement des questions…</p>
+      </div>
+      <p class="status-note mt-4">
+        Un résultat de quiz mesure cet exercice uniquement. Il ne garantit pas votre sécurité et ne
+        constitue pas une certification.
+      </p>
+    </div>
+  </section>
+</div>

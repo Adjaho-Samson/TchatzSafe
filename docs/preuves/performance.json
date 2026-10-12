@@ -1,0 +1,9 @@
+{
+  "conditions": "Chromium, viewport 390×844, cache désactivé, 1,6 Mbit/s, 150 ms de latence, CPU ×4. Serveur local sans gzip.",
+  "fcpMs": 1180,
+  "lcpMs": 1180,
+  "cls": 0,
+  "resourceCount": 22,
+  "bodyBytes": 254861,
+  "thirdPartyResources": []
+}

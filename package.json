@@ -1,0 +1,19 @@
+{
+  "name": "tchatzsafe",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Sensibilisation à la cybersécurité — HTML, CSS, JavaScript sans dépendance runtime",
+  "scripts": {
+    "dev": "node tools/server.mjs",
+    "generate": "python3 tools/build-pages.py && python3 tools/icons.py && prettier --write \"*.html\"",
+    "test": "node --test tests/unit.test.cjs",
+    "test:e2e": "playwright test",
+    "check": "node tools/check.mjs",
+    "format": "prettier --write css js/pages js/services js/main.js js/progress.js js/quiz.js js/components.js js/glossary.js js/theme-init.js js/data/curriculum.js js/data/sources.js js/data/threats.js templates tests tools/*.mjs *.json *.cjs README.md docs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.64.0",
+    "prettier": "^3.9.10"
+  }
+}

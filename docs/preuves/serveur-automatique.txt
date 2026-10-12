@@ -1,0 +1,11 @@
+
+> tchatzsafe@2.0.0 test:e2e
+> playwright test --grep Quota de stockage|Menu mobile
+
+
+Running 2 tests using 2 workers
+
+  ✓  2 tests/frontend.spec.cjs:573:1 › Quota de stockage : la progression récente est exportable directement depuis le cours (1.3s)
+  ✓  1 tests/frontend.spec.cjs:105:1 › Menu mobile : ouverture, focus piégé, fermeture Escape et retour au bouton (1.5s)
+
+  2 passed (2.7s)

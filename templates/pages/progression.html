@@ -1,0 +1,73 @@
+<div class="page-header">
+  <div class="container">
+    <p class="eyebrow">VOTRE PARCOURS</p>
+    <h1>Chaque réflexe compte.</h1>
+    <p>
+      Retrouvez vos leçons, vos quiz et vos badges. Vos avancées sont enregistrées sur cet appareil,
+      sans créer de compte.
+    </p>
+  </div>
+</div>
+<section class="page-content">
+  <div class="container">
+    <div id="dashboard"><p class="status-note">Lecture de votre progression locale…</p></div>
+    <section class="data-section">
+      <h2>Vos badges pédagogiques</h2>
+      <p>Des repères pour encourager votre apprentissage, pas une certification de sécurité.</p>
+      <div class="badge-grid" id="badges"></div>
+    </section>
+    <section class="data-section">
+      <h2>Vos derniers quiz</h2>
+      <div id="quiz-history"></div>
+    </section>
+    <section class="data-section">
+      <h2>Vos données, sous votre contrôle.</h2>
+      <p>
+        La progression reste dans ce navigateur. Si vous effacez ses données, elle sera perdue.
+        Exportez-la pour conserver une copie ou la transférer manuellement sur un autre appareil.
+        Aucune synchronisation serveur n’est active.
+      </p>
+      <div class="data-actions">
+        <button class="btn btn-secondary" type="button" id="export-progress">
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#download"></use></svg
+          >Exporter ma progression</button
+        ><button class="btn btn-secondary" type="button" id="choose-import">
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#upload"></use></svg
+          >Importer un fichier</button
+        ><button class="btn btn-secondary" type="button" id="reset-progress">
+          <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#trash"></use></svg
+          >Réinitialiser
+        </button>
+      </div>
+      <input id="import-progress" type="file" accept=".json,application/json" hidden />
+      <p class="data-message" id="progress-message" role="status"></p>
+      <a class="text-link" href="confidentialite.html"
+        >Comprendre le stockage local<svg class="icon" aria-hidden="true">
+          <use href="assets/icons.svg#arrow"></use></svg
+      ></a>
+    </section>
+  </div>
+</section>
+<dialog class="modal" id="reset-dialog" aria-labelledby="reset-title">
+  <h2 id="reset-title">Réinitialiser votre progression ?</h2>
+  <p>
+    Vos leçons étudiées, scores, badges et XP seront effacés sur cet appareil. Cette action n’efface
+    pas vos brouillons de signalement. Pensez à exporter une copie avant de continuer.
+  </p>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" type="button" data-cancel-reset>Annuler</button
+    ><button class="btn btn-primary" type="button" id="confirm-reset">
+      Effacer la progression
+    </button>
+  </div>
+</dialog>
+<dialog class="modal" id="import-dialog" aria-labelledby="import-title">
+  <h2 id="import-title">Importer cette progression ?</h2>
+  <p id="import-summary">Le fichier remplacera votre progression locale.</p>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" type="button" data-cancel-import>Annuler</button
+    ><button class="btn btn-primary" type="button" id="confirm-import">
+      Remplacer et importer
+    </button>
+  </div>
+</dialog>

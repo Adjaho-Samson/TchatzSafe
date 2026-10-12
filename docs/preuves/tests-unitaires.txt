@@ -1,0 +1,169 @@
+
+> tchatzsafe@2.0.0 test
+> node --test tests/unit.test.cjs
+
+TAP version 13
+# Subtest: Les 15 formations et 12 quiz historiques sont conservés
+ok 1 - Les 15 formations et 12 quiz historiques sont conservés
+  ---
+  duration_ms: 7.581051
+  ...
+# Subtest: Tous les cours ont objectif, exemple, alertes, pratiques, résumé, sources et quiz
+ok 2 - Tous les cours ont objectif, exemple, alertes, pratiques, résumé, sources et quiz
+  ---
+  duration_ms: 2.935694
+  ...
+# Subtest: Tous les quiz contiennent des réponses et corrections cohérentes
+ok 3 - Tous les quiz contiennent des réponses et corrections cohérentes
+  ---
+  duration_ms: 2.86665
+  ...
+# Subtest: Les six fiches sont pédagogiques et sourcées
+ok 4 - Les six fiches sont pédagogiques et sourcées
+  ---
+  duration_ms: 1.921891
+  ...
+# Subtest: Les URL dangereuses pour le navigateur et mal formées sont rejetées
+ok 5 - Les URL dangereuses pour le navigateur et mal formées sont rejetées
+  ---
+  duration_ms: 2.606268
+  ...
+# Subtest: Un lien sans observation n’est jamais déclaré sûr et ne reçoit aucun risque
+ok 6 - Un lien sans observation n’est jamais déclaré sûr et ne reçoit aucun risque
+  ---
+  duration_ms: 2.999375
+  ...
+# Subtest: Les observations sont calculées depuis la syntaxe réelle sans exposer les secrets
+ok 7 - Les observations sont calculées depuis la syntaxe réelle sans exposer les secrets
+  ---
+  duration_ms: 3.583112
+  ...
+# Subtest: Raccourcisseurs, punycode, IP et ports sont décrits sans verdict
+ok 8 - Raccourcisseurs, punycode, IP et ports sont décrits sans verdict
+  ---
+  duration_ms: 2.038578
+  ...
+# Subtest: Messages : urgence, demande de PIN et frais sont des observations explicables
+ok 9 - Messages : urgence, demande de PIN et frais sont des observations explicables
+  ---
+  duration_ms: 2.657887
+  ...
+# Subtest: Une consigne de ne pas partager son code n’est pas classée comme une demande de secret
+ok 10 - Une consigne de ne pas partager son code n’est pas classée comme une demande de secret
+  ---
+  duration_ms: 2.25265
+  ...
+# Subtest: La longueur d’un message est validée
+ok 11 - La longueur d’un message est validée
+  ---
+  duration_ms: 3.050423
+  ...
+# Subtest: Les numéros internationaux sont normalisés, jamais attribués à un titulaire
+ok 12 - Les numéros internationaux sont normalisés, jamais attribués à un titulaire
+  ---
+  duration_ms: 2.393833
+  ...
+# Subtest: Aucun fetch, XMLHttpRequest ou sendBeacon n’existe dans les règles locales
+ok 13 - Aucun fetch, XMLHttpRequest ou sendBeacon n’existe dans les règles locales
+  ---
+  duration_ms: 0.272516
+  ...
+# Subtest: Migration des données V1 : résultats, meilleur score nul et leçons conservés
+ok 14 - Migration des données V1 : résultats, meilleur score nul et leçons conservés
+  ---
+  duration_ms: 2.65427
+  ...
+# Subtest: Le bonus de 80 % est attribué une seule fois après amélioration du score
+ok 15 - Le bonus de 80 % est attribué une seule fois après amélioration du score
+  ---
+  duration_ms: 2.641655
+  ...
+# Subtest: Étudier deux fois la même leçon ne cumule pas les XP
+ok 16 - Étudier deux fois la même leçon ne cumule pas les XP
+  ---
+  duration_ms: 2.827607
+  ...
+# Subtest: La progression générale est bornée à 100 %
+ok 17 - La progression générale est bornée à 100 %
+  ---
+  duration_ms: 7.006165
+  ...
+# Subtest: Un export valide se réimporte et ne contient aucun brouillon privé
+ok 18 - Un export valide se réimporte et ne contient aucun brouillon privé
+  ---
+  duration_ms: 2.936217
+  ...
+# Subtest: Les imports invalides et les résultats incohérents sont refusés sans effacer la progression
+ok 19 - Les imports invalides et les résultats incohérents sont refusés sans effacer la progression
+  ---
+  duration_ms: 2.683583
+  ...
+# Subtest: Le stockage corrompu ne plante pas le site et n’est pas supprimé silencieusement
+ok 20 - Le stockage corrompu ne plante pas le site et n’est pas supprimé silencieusement
+  ---
+  duration_ms: 2.153149
+  ...
+# Subtest: En stockage bloqué, le repli en mémoire est explicite et fonctionne dans la session
+ok 21 - En stockage bloqué, le repli en mémoire est explicite et fonctionne dans la session
+  ---
+  duration_ms: 2.020354
+  ...
+# Subtest: L’adaptateur de progression est remplaçable sans changer les composants
+ok 22 - L’adaptateur de progression est remplaçable sans changer les composants
+  ---
+  duration_ms: 2.983705
+  ...
+# Subtest: Un brouillon nécessite un consentement et une entrée valide
+ok 23 - Un brouillon nécessite un consentement et une entrée valide
+  ---
+  duration_ms: 2.081183
+  ...
+# Subtest: Les brouillons sont privés, non transmis et ne conservent ni fichier ni nom de preuve
+ok 24 - Les brouillons sont privés, non transmis et ne conservent ni fichier ni nom de preuve
+  ---
+  duration_ms: 2.447409
+  ...
+# Subtest: La modération ne propose aucun statut de fraude confirmée
+ok 25 - La modération ne propose aucun statut de fraude confirmée
+  ---
+  duration_ms: 2.245289
+  ...
+# Subtest: Les brouillons expirés sont purgés lors de la lecture après 30 jours
+ok 26 - Les brouillons expirés sont purgés lors de la lecture après 30 jours
+  ---
+  duration_ms: 1.936023
+  ...
+# Subtest: La limitation de fréquence locale rejette le sixième brouillon de la minute
+ok 27 - La limitation de fréquence locale rejette le sixième brouillon de la minute
+  ---
+  duration_ms: 2.897634
+  ...
+# Subtest: Supprimer un brouillon ne modifie pas la progression
+ok 28 - Supprimer un brouillon ne modifie pas la progression
+  ---
+  duration_ms: 2.518624
+  ...
+# Subtest: Après un quota dépassé, la lecture et l’export utilisent le nouvel état en mémoire, pas l’ancienne sauvegarde
+ok 29 - Après un quota dépassé, la lecture et l’export utilisent le nouvel état en mémoire, pas l’ancienne sauvegarde
+  ---
+  duration_ms: 2.249605
+  ...
+# Subtest: Une suppression refusée masque l’ancienne valeur dans la session et avertit sur la suppression persistante
+ok 30 - Une suppression refusée masque l’ancienne valeur dans la session et avertit sur la suppression persistante
+  ---
+  duration_ms: 2.212936
+  ...
+# Subtest: Une valeur réellement supprimée ailleurs n’est pas ressuscitée depuis le cache mémoire
+ok 31 - Une valeur réellement supprimée ailleurs n’est pas ressuscitée depuis le cache mémoire
+  ---
+  duration_ms: 3.381122
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 183.884383

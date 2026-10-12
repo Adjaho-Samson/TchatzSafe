@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Examiner une menace — TchatzSafe</title>
+    <meta
+      name="description"
+      content="Une démonstration locale et transparente pour lire les indices d’un lien, message ou numéro suspect."
+    />
+    <meta name="theme-color" content="#0c0d0f" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; img-src &#x27;self&#x27; data: blob:; font-src &#x27;self&#x27;; connect-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27;"
+    />
+    <meta property="og:title" content="Examiner une menace — TchatzSafe" />
+    <meta
+      property="og:description"
+      content="Une démonstration locale et transparente pour lire les indices d’un lien, message ou numéro suspect."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <link rel="canonical" href="https://tchatzsafe.vercel.app/analyser.html" />
+    <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin />
+    <script src="js/theme-init.js"></script>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <script src="js/services/storage.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/services/threat-rules.js" defer></script>
+    <script src="js/pages/analyzer.js" defer></script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Aller au contenu principal</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo" aria-label="TchatzSafe, accueil"
+          ><svg class="icon" aria-hidden="true" focusable="false">
+            <use href="assets/icons.svg#shield"></use></svg
+          ><span class="brand-word">Tchatz<span>Safe</span></span></a
+        >
+        <nav class="nav-desktop" aria-label="Navigation principale">
+          <a href="index.html" class="nav-link">Accueil</a
+          ><a href="menaces.html" class="nav-link">Menaces</a
+          ><a href="apprendre.html" class="nav-link">Apprendre</a
+          ><a href="quiz.html" class="nav-link">Quiz</a
+          ><a href="conseils.html" class="nav-link">Conseils</a>
+        </nav>
+        <div class="header-actions">
+          <a href="progression.html" class="btn btn-secondary progress-link"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#user"></use></svg
+            >Ma progression</a
+          ><a href="analyser.html" class="btn btn-primary"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#scan"></use></svg
+            >Analyser une menace</a
+          ><button
+            class="icon-button theme-toggle"
+            data-theme-toggle
+            type="button"
+            aria-label="Activer le thème clair"
+          >
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#sun"></use>
+            </svg></button
+          ><button
+            type="button"
+            class="icon-button menu-toggle"
+            aria-label="Ouvrir le menu"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+          >
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#menu"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <dialog id="mobile-menu" class="mobile-menu" aria-labelledby="mobile-menu-title">
+        <h2 id="mobile-menu-title" class="sr-only">Menu de navigation</h2>
+        <div class="mobile-menu-top">
+          <a href="index.html" class="logo" aria-label="TchatzSafe, accueil"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#shield"></use></svg
+            ><span class="brand-word">Tchatz<span>Safe</span></span></a
+          ><button type="button" class="icon-button" data-close-menu aria-label="Fermer le menu">
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#close"></use>
+            </svg>
+          </button>
+        </div>
+        <nav aria-label="Navigation mobile">
+          <a href="index.html" class="nav-link">Accueil</a
+          ><a href="menaces.html" class="nav-link">Menaces</a
+          ><a href="apprendre.html" class="nav-link">Apprendre</a
+          ><a href="quiz.html" class="nav-link">Quiz</a
+          ><a href="conseils.html" class="nav-link">Conseils</a
+          ><a href="glossaire.html" class="nav-link">Glossaire</a
+          ><a href="progression.html" class="nav-link">Ma progression</a
+          ><a href="signaler.html" class="nav-link">Signalement · démo</a>
+        </nav>
+        <div class="mobile-menu-bottom">
+          <a href="analyser.html" class="btn btn-primary btn-block"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#scan"></use></svg
+            >Analyser une menace</a
+          >
+          <p>Gratuit. Sans compte. À votre rythme.</p>
+        </div>
+      </dialog>
+    </header>
+    <div class="storage-banner" id="storage-banner" role="status" hidden>
+      <div class="container">
+        <p></p>
+        <button type="button" class="btn btn-secondary btn-sm mt-4" data-export-session hidden>
+          Exporter la progression de cette page
+        </button>
+      </div>
+    </div>
+    <div class="storage-banner" id="app-error-banner" role="alert" hidden>
+      <div class="container">
+        <p>
+          Un élément nécessaire de la page n’a pas pu être chargé. Les interactions peuvent être
+          indisponibles. Aucun envoi de formulaire n’a eu lieu.
+        </p>
+        <button type="button" class="btn btn-secondary btn-sm mt-4" data-reload-page>
+          Actualiser la page
+        </button>
+      </div>
+    </div>
+    <noscript
+      ><div class="noscript-message">
+        Les interactions (cours, quiz et formulaires) nécessitent JavaScript. Aucun formulaire n’est
+        envoyé sans JavaScript.
+        <nav aria-label="Navigation sans JavaScript">
+          <a href="index.html">Accueil</a><a href="conseils.html">Conseils</a
+          ><a href="a-propos.html">Mission</a><a href="sources.html">Sources</a
+          ><a href="confidentialite.html">Confidentialité</a>
+        </nav>
+      </div></noscript
+    >
+    <main id="main">
+      <div class="page-header">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Fil d’Ariane">
+            <a href="index.html">Accueil</a
+            ><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#chevron"></use></svg
+            ><span>Analyseur</span>
+          </nav>
+          <p class="eyebrow">OBSERVER AVANT D’AGIR</p>
+          <h1>Un doute ?<br />Regardons les indices.</h1>
+          <p>
+            Un lien, un message ou un numéro vous semble suspect ? Cette démonstration vous aide à
+            lire certains indices, sans ouvrir le lien ni transmettre votre contenu.
+          </p>
+        </div>
+      </div>
+      <section class="page-content">
+        <div class="container tool-layout">
+          <div class="tool-panel">
+            <div class="tool-panel-header">
+              <h2>Que voulez-vous examiner ?</h2>
+              <span class="tag tag-red"><span class="dot"></span>DÉMO LOCALE</span>
+            </div>
+            <div class="type-tabs" role="group" aria-label="Type de contenu">
+              <button
+                type="button"
+                class="type-tab active"
+                data-analysis-kind="link"
+                aria-pressed="true"
+              >
+                <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#link"></use></svg
+                >Un lien</button
+              ><button
+                type="button"
+                class="type-tab"
+                data-analysis-kind="message"
+                aria-pressed="false"
+              >
+                <svg class="icon" aria-hidden="true">
+                  <use href="assets/icons.svg#message"></use></svg
+                >Un message</button
+              ><button
+                type="button"
+                class="type-tab"
+                data-analysis-kind="phone"
+                aria-pressed="false"
+              >
+                <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#phone"></use></svg
+                >Un numéro
+              </button>
+            </div>
+            <form id="analyzer-form" novalidate autocomplete="off">
+              <div class="input-group">
+                <label id="suspect-label" for="suspect-input">Le lien à examiner</label
+                ><textarea
+                  id="suspect-input"
+                  rows="3"
+                  maxlength="2048"
+                  inputmode="url"
+                  placeholder="https://exemple.example/connexion"
+                  autocomplete="off"
+                  autocapitalize="none"
+                  spellcheck="false"
+                  aria-describedby="analyzer-hint analyzer-error"
+                ></textarea>
+                <p class="field-hint" id="analyzer-hint">
+                  Retirez les noms, données personnelles, codes et mots de passe. Le contenu n’est
+                  ni enregistré ni envoyé.
+                </p>
+                <p class="field-error" id="analyzer-error" role="alert"></p>
+              </div>
+              <div class="tool-actions">
+                <button id="analyzer-submit" type="submit" class="btn btn-primary" disabled>
+                  <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#scan"></use></svg
+                  >Examiner les indices</button
+                ><button id="clear-analysis" type="button" class="btn btn-secondary">
+                  Effacer
+                </button>
+              </div>
+              <button id="load-example" type="button" class="btn btn-ghost btn-sm mt-4">
+                Utiliser un exemple fictif<svg class="icon" aria-hidden="true">
+                  <use href="assets/icons.svg#arrow"></use>
+                </svg>
+              </button>
+              <p class="field-hint" id="sample-note">
+                Les exemples sont inventés ; les domaines .example ne désignent pas des services
+                réels.
+              </p>
+            </form>
+            <div class="analysis-empty" id="analysis-empty">
+              <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#scan"></use></svg>
+              <h2>Un outil pour comprendre, pas pour certifier.</h2>
+              <p>
+                Les observations et les conseils apparaîtront ici.<br />Aucun score de sécurité ni
+                verdict de sûreté n’est calculé.
+              </p>
+            </div>
+            <div class="analysis-result" id="analysis-result" hidden></div>
+          </div>
+          <aside class="tool-aside">
+            <div class="notice">
+              <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#info"></use></svg>
+              <div>
+                <strong>Pas de moteur de sécurité connecté.</strong>Cette version observe des règles
+                locales limitées. Elle ne peut pas déterminer le risque réel.
+              </div>
+            </div>
+            <div class="card">
+              <h2>Ce que l’outil observe</h2>
+              <ul>
+                <li>
+                  La structure d’une adresse : protocole, domaine, raccourcisseur connu, paramètres.
+                </li>
+                <li>Certains mots de pression, de demande de secret ou de gain dans un message.</li>
+                <li>Le format d’un numéro, pas son identité ni sa réputation.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h2>Ce qu’il ne vérifie pas</h2>
+              <ul>
+                <li>Le contenu d’un site ou les redirections.</li>
+                <li>Les logiciels malveillants et pièces jointes.</li>
+                <li>La réputation, l’attribution d’un numéro ou l’identité d’un interlocuteur.</li>
+              </ul>
+              <p>Ne concluez jamais qu’un lien est sûr parce que cet outil ne relève rien.</p>
+              <a href="sources.html" class="text-link"
+                >Sources et limites<svg class="icon" aria-hidden="true">
+                  <use href="assets/icons.svg#arrow"></use></svg
+              ></a>
+            </div>
+            <p class="status-note">
+              <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#lock"></use></svg
+              >Lecture sur votre appareil. Aucun lien saisi n’est visité automatiquement.
+            </p>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo" aria-label="TchatzSafe, accueil"
+              ><svg class="icon" aria-hidden="true" focusable="false">
+                <use href="assets/icons.svg#shield"></use></svg
+              ><span class="brand-word">Tchatz<span>Safe</span></span></a
+            >
+            <p>
+              Comprendre les pièges numériques.<br />Adopter les bons réflexes, chaque jour.<br />La
+              cybersécurité, accessible à tous.
+            </p>
+            <p class="footer-privacy">APPRENDRE, PAS ÊTRE SURVEILLÉ.</p>
+          </div>
+          <div class="footer-col">
+            <h2>Explorer</h2>
+            <ul>
+              <li><a href="menaces.html">Bibliothèque des menaces</a></li>
+              <li><a href="apprendre.html">Les formations</a></li>
+              <li><a href="quiz.html">Les quiz</a></li>
+              <li><a href="conseils.html">Conseils pratiques</a></li>
+              <li><a href="glossaire.html">Glossaire</a></li>
+              <li><a href="progression.html">Ma progression</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h2>TchatzSafe</h2>
+            <ul>
+              <li><a href="a-propos.html">Notre mission</a></li>
+              <li><a href="analyser.html">Analyseur · démo</a></li>
+              <li><a href="signaler.html">Signalement · démo</a></li>
+              <li><a href="sources.html">Sources et fiabilité</a></li>
+              <li><a href="confidentialite.html">Confidentialité</a></li>
+              <li><a href="moderation.html">Modération · démo locale</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h2>Sources utiles</h2>
+            <ul>
+              <li>
+                <a
+                  href="https://www.cybermalveillance.gouv.fr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Cybermalveillance.gouv.fr<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+              <li>
+                <a href="https://www.cnil.fr/" target="_blank" rel="noopener noreferrer"
+                  >CNIL<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+              <li>
+                <a href="https://cyber.gouv.fr/" target="_blank" rel="noopener noreferrer"
+                  >ANSSI<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+              <li>
+                <a href="https://www.cnin.bj/" target="_blank" rel="noopener noreferrer"
+                  >CNIN · Bénin<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            Un outil éducatif, pas une garantie de sécurité. En cas d’incident, contactez le service
+            concerné ou l’autorité compétente de votre pays.
+          </p>
+          <p>Copyright <span data-year>2026</span> TchatzSafe</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

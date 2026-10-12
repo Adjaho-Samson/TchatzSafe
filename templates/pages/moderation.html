@@ -1,0 +1,54 @@
+<div class="page-header">
+  <div class="container">
+    <p class="eyebrow">ATELIER DE MODÉRATION · DÉMONSTRATION LOCALE</p>
+    <h1>Un traitement responsable.<br />Jamais une publication automatique.</h1>
+    <p>
+      Cet atelier illustre un parcours de revue. Il affiche uniquement les brouillons de ce
+      navigateur : aucun signalement reçu d’un serveur, aucune équipe authentifiée, aucun fait
+      vérifié.
+    </p>
+  </div>
+</div>
+<section class="page-content">
+  <div class="container">
+    <div class="notice">
+      <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#alert"></use></svg>
+      <div>
+        <strong>Pas un espace d’administration sécurisé.</strong>Les changements de statut sont des
+        simulations locales. Ils ne prouvent rien sur un lien, une personne ou un numéro et ne sont
+        jamais publiés. Un vrai module nécessite une API, des droits d’accès et un journal d’audit
+        côté serveur.
+      </div>
+    </div>
+    <div class="toolbar mt-8">
+      <p class="toolbar-label" id="moderation-count">Lecture des brouillons locaux…</p>
+      <a class="btn btn-secondary btn-sm" href="signaler.html"
+        >Préparer un brouillon<svg class="icon" aria-hidden="true">
+          <use href="assets/icons.svg#arrow"></use></svg
+      ></a>
+    </div>
+    <div id="local-drafts" class="draft-list"><p class="status-note">Chargement…</p></div>
+    <p class="data-message" id="report-feedback" role="status"></p>
+    <section class="data-section">
+      <h2>Le parcours prévu pour une version connectée</h2>
+      <p>
+        Réception privée, triage anti-abus, examen par une personne habilitée, demandes de
+        précisions si nécessaire, puis décision motivée. Une accusation reste non vérifiée tant que
+        les éléments ne sont pas établis. Toute publication éventuelle exige une politique dédiée et
+        une validation humaine.
+      </p>
+      <a href="confidentialite.html" class="text-link"
+        >Politique de confidentialité<svg class="icon" aria-hidden="true">
+          <use href="assets/icons.svg#arrow"></use></svg
+      ></a>
+    </section>
+  </div>
+</section>
+<dialog class="modal" id="delete-draft-dialog" aria-labelledby="delete-draft-title">
+  <h2 id="delete-draft-title">Supprimer ce brouillon local ?</h2>
+  <p>Aucun contenu ne sera supprimé d’un serveur : aucun n’y a été envoyé.</p>
+  <div class="modal-actions">
+    <button class="btn btn-secondary" type="button" data-cancel-delete>Annuler</button
+    ><button class="btn btn-primary" type="button" id="confirm-delete-draft">Supprimer</button>
+  </div>
+</dialog>
