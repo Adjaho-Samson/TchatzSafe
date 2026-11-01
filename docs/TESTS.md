@@ -1,5 +1,7 @@
 # Vérifications exécutées et limites
 
+> **Document historique.** Certains détails ont évolué en novembre 2026. Pour l’état actuel, consulter [le compte rendu](VALIDATION-2026-11.md) et [le guide de déploiement](DEPLOIEMENT-VERCEL.md).
+
 ## Re-vérification du 12 octobre 2026 — audit correctif
 
 Cette section distingue ce qui a été **réellement rejoué** pendant l’audit correctif de ce qui

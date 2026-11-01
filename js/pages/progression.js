@@ -11,20 +11,37 @@ document.addEventListener('DOMContentLoaded', () => {
       level = Progress.getLevelInfo(p.xp),
       overall = Progress.getOverallProgress(),
       next = Progress.getNextLesson(),
+      resume = Progress.getResumeLesson(),
       scores = Object.values(p.bestScores);
     document.getElementById('dashboard').innerHTML =
-      `<div class="dash-grid"><div class="card dash-level"><div class="dash-level-header"><div><p class="dash-level-kicker">NIVEAU PÉDAGOGIQUE ${level.level}</p><h2 class="dash-level-name">${e(level.name)}</h2></div><p class="dash-level-xp">${level.isMax ? `${level.xp} XP` : `${level.xp} / ${level.nextLevelXp} XP`}</p></div><div class="progress-bar" role="progressbar" aria-label="Progression vers le prochain niveau pédagogique" aria-valuenow="${level.percent}" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar-fill" style="width:${level.percent}%"></div></div><p class="dash-level-pct">${level.isMax ? 'Dernier niveau pédagogique atteint.' : `${level.percent} % vers le niveau suivant.`} Les XP encouragent l’apprentissage uniquement.</p></div><div class="card dash-advice"><p class="dash-advice-label">VOTRE PROCHAINE ÉTAPE</p><p class="dash-advice-text">${e(Progress.getPersonalizedAdvice())}</p><a class="btn btn-primary btn-sm" href="${next ? 'apprendre.html?theme=' + e(next.id) : 'quiz.html'}">${next ? 'Continuer avec ' + e(next.title) : 'Rejouer un quiz'}${App.icon('arrow')}</a></div></div><div class="progress-stats"><div class="stat-card"><p class="stat-value">${overall} %</p><p class="stat-label">Parcours général</p><div class="progress-bar" role="progressbar" aria-label="Parcours général étudié" aria-valuenow="${overall}" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar-fill" style="width:${overall}%"></div></div></div><div class="stat-card"><p class="stat-value">${p.lessonsCompleted.length}<span class="text-muted"> / ${LESSONS.length}</span></p><p class="stat-label">Leçons étudiées</p></div><div class="stat-card"><p class="stat-value">${Object.keys(p.quizzesCompleted).length}<span class="text-muted"> / ${Object.keys(QUIZZES).length}</span></p><p class="stat-label">Quiz terminés</p></div><div class="stat-card"><p class="stat-value">${scores.length ? Math.max(...scores) + ' %' : '—'}</p><p class="stat-label">Meilleur score pédagogique</p></div></div>`;
+      `<div class="dash-grid"><div class="card dash-level"><div class="dash-level-header"><div><p class="dash-level-kicker">NIVEAU PÉDAGOGIQUE ${level.level}</p><h2 class="dash-level-name">${e(level.name)}</h2></div><p class="dash-level-xp">${level.isMax ? `${level.xp} XP` : `${level.xp} / ${level.nextLevelXp} XP`}</p></div><div class="progress-bar" role="progressbar" aria-label="Progression vers le prochain niveau pédagogique" aria-valuenow="${level.percent}" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar-fill" style="width:${level.percent}%"></div></div><p class="dash-level-pct">${level.isMax ? 'Dernier niveau pédagogique atteint.' : `${level.percent} % vers le niveau suivant.`} Les XP encouragent l’apprentissage uniquement.</p></div><div class="card dash-advice"><p class="dash-advice-label">VOTRE PROCHAINE ÉTAPE</p><p class="dash-advice-text">${e(Progress.getPersonalizedAdvice())}</p><a class="btn btn-primary btn-sm" href="${next ? 'apprendre.html?theme=' + e(next.id) + (resume && resume.lesson.id === next.id ? '#' + e(resume.section) : '') : 'quiz.html'}">${next ? (resume && resume.lesson.id === next.id ? 'Reprendre ' : 'Continuer avec ') + e(next.title) : 'Rejouer un quiz'}${App.icon('arrow')}</a></div></div><div class="progress-stats"><div class="stat-card"><p class="stat-value">${overall} %</p><p class="stat-label">Parcours général</p><div class="progress-bar" role="progressbar" aria-label="Parcours général étudié" aria-valuenow="${overall}" aria-valuemin="0" aria-valuemax="100"><div class="progress-bar-fill" style="width:${overall}%"></div></div></div><div class="stat-card"><p class="stat-value">${p.lessonsCompleted.length}<span class="text-muted"> / ${LESSONS.length}</span></p><p class="stat-label">Leçons étudiées</p></div><div class="stat-card"><p class="stat-value">${Object.keys(p.quizzesCompleted).length}<span class="text-muted"> / ${Object.keys(QUIZZES).length}</span></p><p class="stat-label">Quiz terminés</p></div><div class="stat-card"><p class="stat-value">${scores.length ? Math.max(...scores) + ' %' : '—'}</p><p class="stat-label">Meilleur score pédagogique</p></div></div>`;
     document.getElementById('badges').innerHTML = Object.entries(Progress.BADGES_INFO)
       .map(([id, badge]) => {
         const earned = p.badges.includes(id);
         return `<article class="badge-item ${earned ? 'earned' : 'locked'}"><div class="badge-icon">${App.icon(earned ? 'badge' : 'lock')}</div><div class="badge-info"><h3>${e(badge.name)}</h3><p>${e(badge.description)}</p><span class="badge-state">${earned ? 'OBTENU SUR CET APPAREIL' : 'À DÉCOUVRIR'}</span></div></article>`;
       })
       .join('');
-    const history = Object.entries(p.quizzesCompleted).sort(
-      (a, b) => (Date.parse(b[1].completedAt) || 0) - (Date.parse(a[1].completedAt) || 0)
-    );
+    const lessonHistory = p.lessonsCompleted
+      .slice()
+      .sort(
+        (a, b) =>
+          (Date.parse(p.lessonCompletionDates[b]) || 0) -
+          (Date.parse(p.lessonCompletionDates[a]) || 0)
+      );
+    document.getElementById('lesson-history').innerHTML = lessonHistory.length
+      ? `<div class="history-list">${lessonHistory
+          .map((id) => {
+            const lesson = LESSONS.find((item) => item.id === id);
+            const completedAt = p.lessonCompletionDates[id];
+            return `<a href="apprendre.html?theme=${e(id)}" class="history-item"><div><h3>${e(lesson?.title || id)}</h3><p>${completedAt ? 'Étudiée le ' + e(new Date(completedAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })) : 'Date non disponible pour cette ancienne progression'}</p></div><span>Revoir ${App.icon('arrow')}</span></a>`;
+          })
+          .join('')}</div>`
+      : `<div class="empty-state">${App.icon('book')}<h3>Votre parcours commence ici.</h3><p>Marquez une formation comme étudiée pour la retrouver dans cet historique.</p><a class="btn btn-secondary" href="apprendre.html">Découvrir les formations ${App.icon('arrow')}</a></div>`;
+    const history = p.quizHistory
+      .slice()
+      .sort((a, b) => (Date.parse(b.completedAt) || 0) - (Date.parse(a.completedAt) || 0));
     document.getElementById('quiz-history').innerHTML = history.length
-      ? `<div class="history-list">${history.map(([id, q]) => `<a href="quiz.html?id=${e(id)}" class="history-item"><div><h3>${e(QUIZZES[id]?.title || id)}</h3><p>${q.completedAt ? e(new Date(q.completedAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })) : 'Date non disponible'} · ${q.score} / ${q.total} bonnes réponses</p></div><span>${q.percent} % ${App.icon('arrow')}</span></a>`).join('')}</div>`
+      ? `<div class="history-list">${history.map((q) => `<a href="quiz.html?id=${e(q.id)}" class="history-item"><div><h3>${e(QUIZZES[q.id]?.title || q.id)}</h3><p>${q.completedAt ? e(new Date(q.completedAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })) : 'Date non disponible'} · ${q.score} / ${q.total} bonnes réponses</p></div><span>${q.percent} % ${App.icon('arrow')}</span></a>`).join('')}</div>`
       : `<div class="empty-state">${App.icon('help')}<h3>Votre premier quiz vous attend.</h3><p>Aucun quiz n’a encore été terminé sur cet appareil. Commencez avec cinq questions sur les bases.</p><a class="btn btn-secondary" href="quiz.html?id=debutant">Faire le quiz débutant ${App.icon('arrow')}</a></div>`;
   }
   render();

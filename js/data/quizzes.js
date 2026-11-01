@@ -17,12 +17,12 @@ const QUIZZES = {
           "Transférer le lien à un ami pour qu'il vérifie"
         ],
         correct: 1,
-        explanation: "Les vrais transporteurs ne demandent pas de « libérer » un colis via un lien reçu par SMS. En cliquant, vous risquez d'atterrir sur un faux site qui vole vos identifiants ou vos moyens de paiement.",
+        explanation: "Certains faux messages imitent les transporteurs et demandent de « libérer » un colis. Un lien peut mener à un site qui vole vos identifiants ou vos moyens de paiement : vérifiez par un canal officiel indépendant.",
         notion: "L'urgence est un outil classique du phishing. Prenez toujours le temps de vérifier par un autre canal."
       },
       {
         id: "ph2",
-        question: "Quel élément doit le plus vous alerter dans un email ?",
+        question: "Quel élément doit le plus vous alerter dans un courriel ?",
         options: [
           "La présence d'un logo d'entreprise connue",
           "Une adresse d'expéditeur légèrement différente de l'adresse officielle",
@@ -30,8 +30,8 @@ const QUIZZES = {
           "L'absence de fautes d'orthographe"
         ],
         correct: 1,
-        explanation: "Les attaquants imitent souvent le nom affiché mais utilisent une adresse email différente (par exemple support@entreprise-secure.com au lieu de support@entreprise.com). C'est l'un des indices les plus fiables.",
-        notion: "Vérifiez toujours l'adresse email complète, pas seulement le nom affiché."
+        explanation: "Les attaquants imitent souvent le nom affiché mais utilisent une adresse de courriel différente (par exemple support@entreprise-securite.example au lieu de support@entreprise.example). Une différence est un signal d'alerte, mais une adresse plausible peut aussi être falsifiée.",
+        notion: "Vérifiez toujours l'adresse de courriel complète, pas seulement le nom affiché."
       },
       {
         id: "ph3",
@@ -77,7 +77,7 @@ const QUIZZES = {
   "liens-suspects": {
     id: "liens-suspects",
     title: "Quiz : Liens suspects",
-    description: "Apprenez à identifier un lien dangereux avant de cliquer.",
+    description: "Apprenez à repérer les indices d'un lien suspect sans l'ouvrir.",
     themeId: "liens-suspects",
     level: "débutant",
     questions: [
@@ -91,20 +91,20 @@ const QUIZZES = {
           "Vérifier l'heure d'envoi du message"
         ],
         correct: 1,
-        explanation: "L'URL affichée n'est pas toujours l'URL réelle. Sur mobile comme sur ordinateur, il est possible d'afficher la destination complète avant de cliquer.",
+        explanation: "L'adresse affichée peut différer du lien associé, et une redirection peut encore modifier la destination. Inspectez-la sans l'ouvrir et privilégiez un canal officiel.",
         notion: "Toujours inspecter le vrai lien avant de l'ouvrir."
       },
       {
         id: "ls2",
-        question: "Parmi ces domaines, lequel est le plus suspect pour un site de banque ?",
+        question: "L'adresse officielle fictive est banque.example. Quel domaine indique une autre destination ?",
         options: [
-          "banque.com",
-          "banque-securite-client.com",
-          "www.banque.com",
-          "banque.fr"
+          "banque.example",
+          "banque-securite.example",
+          "www.banque.example",
+          "espace.banque.example"
         ],
         correct: 1,
-        explanation: "Les attaquants ajoutent souvent des mots rassurants (securite, client, login) pour créer de faux domaines. Le domaine officiel est généralement simple et stable.",
+        explanation: "Des mots rassurants peuvent masquer un domaine différent. Ici, banque-securite.example n'est pas un sous-domaine de banque.example. Vérifiez l'adresse officielle par un canal indépendant.",
         notion: "Un domaine trop long ou trop « rassurant » doit éveiller la méfiance."
       },
       {
@@ -178,7 +178,7 @@ const QUIZZES = {
           "Parce que cela ralentit la connexion"
         ],
         correct: 1,
-        explanation: "Si un service est compromis et que votre mot de passe fuit, les attaquants testent automatiquement ce couple email/mot de passe sur d'autres sites populaires.",
+        explanation: "Si un service est compromis et que votre mot de passe fuit, les attaquants testent automatiquement ce couple courriel/mot de passe sur d'autres sites populaires.",
         notion: "Un mot de passe unique par compte limite les dégâts en cas de fuite."
       },
       {
@@ -260,12 +260,12 @@ const QUIZZES = {
         question: "Après avoir récupéré l'accès à un compte piraté, que faut-il aussi vérifier ?",
         options: [
           "Uniquement le mot de passe",
-          "Les appareils connectés, les applications liées et l'adresse email de récupération",
+          "Les appareils connectés, les applications liées et l'adresse de courriel de récupération",
           "Seulement les publications récentes",
           "Rien d'autre"
         ],
         correct: 1,
-        explanation: "Un attaquant peut avoir ajouté un appareil, une application ou modifié l'email de récupération pour conserver un accès. Tout doit être contrôlé.",
+        explanation: "Un attaquant peut avoir ajouté un appareil, une application ou modifié le courriel de récupération pour conserver un accès. Tout doit être contrôlé.",
         notion: "Sécuriser un compte ne se limite pas au changement de mot de passe."
       },
       {
@@ -326,7 +326,7 @@ const QUIZZES = {
           "Cela s'active automatiquement"
         ],
         correct: 1,
-        explanation: "La vérification en deux étapes ajoute un code PIN personnel. Même si quelqu'un obtient le SMS de vérification, il ne pourra pas finaliser l'accès sans ce PIN.",
+        explanation: "La vérification en deux étapes ajoute un code PIN personnel. Elle complique la prise de contrôle si quelqu'un obtient le code SMS, sans éliminer tous les risques.",
         notion: "Activez la vérification en deux étapes dès que possible."
       },
       {
@@ -349,7 +349,7 @@ const QUIZZES = {
           "Attendre 24 heures",
           "Réinstaller WhatsApp sur votre téléphone et suivre la procédure de récupération",
           "Créer un compte avec un autre numéro uniquement",
-          "Envoyer un email à tous vos contacts"
+          "Envoyer un courriel à tous vos contacts"
         ],
         correct: 1,
         explanation: "En réinstallant WhatsApp et en demandant un nouveau code de vérification, vous pouvez parfois récupérer le compte. Activez ensuite la vérification en deux étapes.",
@@ -365,7 +365,7 @@ const QUIZZES = {
           "Elle est obligatoire pour utiliser les appels vidéo"
         ],
         correct: 1,
-        explanation: "Sans le PIN de la vérification en deux étapes, un attaquant qui a intercepté le SMS ne peut pas terminer l'inscription de votre numéro sur un autre appareil.",
+        explanation: "Le PIN de vérification en deux étapes ajoute un obstacle à une prise de contrôle, mais aucune protection n'est absolue.",
         notion: "Le PIN WhatsApp est une barrière supplémentaire essentielle."
       }
     ]
@@ -395,13 +395,13 @@ const QUIZZES = {
         question: "On vous annonce que vous avez gagné un concours et qu'il faut envoyer de l'argent pour « frais de retrait ». Quelle est la bonne réaction ?",
         options: [
           "Envoyer la somme demandée pour récupérer le gain",
-          "Ignorer : on ne paie jamais pour recevoir un lot",
+          "Ne pas payer et vérifier auprès de l'organisateur par un canal officiel",
           "Négocier le montant des frais",
           "Demander à un proche d'envoyer l'argent à votre place"
         ],
         correct: 1,
-        explanation: "C'est un schéma classique d'arnaque. Les frais demandés ne mènent jamais au gain annoncé.",
-        notion: "Un vrai gain ne demande pas de paiement préalable."
+        explanation: "Une demande de frais pour obtenir un gain inattendu est un signal d'alerte courant. Vérifiez auprès de l'organisateur par un canal indépendant avant toute démarche.",
+        notion: "Un paiement exigé pour débloquer un gain doit éveiller la méfiance."
       },
       {
         id: "mm3",
@@ -510,7 +510,7 @@ const QUIZZES = {
           "L'ignorer",
           "Changer immédiatement le mot de passe et vérifier les sessions actives",
           "Attendre une deuxième notification",
-          "Répondre à la notification par email"
+          "Répondre à la notification par courriel"
         ],
         correct: 1,
         explanation: "Une connexion inhabituelle est un signal d'alerte fort. Sécurisez le compte sans délai.",
@@ -536,7 +536,7 @@ const QUIZZES = {
         ],
         correct: 1,
         explanation: "Une donnée personnelle est toute information qui permet de vous identifier directement ou indirectement. Le numéro de téléphone en fait partie.",
-        notion: "Nom, téléphone, email, photo, adresse… sont des données personnelles."
+        notion: "Nom, téléphone, courriel, photo, adresse… sont des données personnelles."
       },
       {
         id: "dp2",
@@ -678,26 +678,26 @@ const QUIZZES = {
         question: "Vous recevez un message : « Félicitations, vous avez gagné ! Cliquez pour réclamer. » Vous n'avez jamais participé. Que conclure ?",
         options: [
           "C'est probablement légitime",
-          "C'est très probablement une arnaque",
+          "C'est suspect : vérifier auprès de l'organisateur sans cliquer",
           "Il faut cliquer pour confirmer",
           "Il faut envoyer ses données pour vérifier"
         ],
         correct: 1,
-        explanation: "Si vous n'avez pas participé, vous ne pouvez pas avoir gagné. C'est un schéma classique de phishing ou de collecte de données.",
-        notion: "Pas de participation = pas de gain possible."
+        explanation: "Un gain inattendu alors que vous ne vous souvenez d'aucune participation est un signal d'alerte. Vérifiez auprès de l'organisateur sans utiliser les coordonnées du message.",
+        notion: "Un gain inattendu mérite une vérification indépendante."
       },
       {
         id: "fc2",
-        question: "Un concours vous demande de payer des « frais de livraison » pour recevoir votre lot. Que faire ?",
+        question: "Un message inattendu annonce un gain et demande des « frais de livraison ». Que faire ?",
         options: [
           "Payer les frais",
-          "Refuser : on ne paie pas pour un lot gagné",
+          "Ne pas payer et vérifier auprès de l'organisateur par un canal officiel",
           "Négocier les frais",
           "Payer une partie seulement"
         ],
         correct: 1,
-        explanation: "Les frais de livraison demandés avant l'envoi d'un lot « gagné » sont une technique d'extorsion classique. L'argent part et le lot n'arrive jamais.",
-        notion: "Un vrai organisateur assume les frais ou les déduit clairement du lot."
+        explanation: "Des frais réclamés pour un gain inattendu peuvent masquer une arnaque. Contactez l'organisateur par des coordonnées trouvées indépendamment et ne payez pas sous pression.",
+        notion: "Une demande de frais avant réception d'un gain appelle une vérification indépendante."
       },
       {
         id: "fc3",
@@ -836,14 +836,14 @@ const QUIZZES = {
       },
       {
         id: "rap2",
-        question: "Un email urgent demande de « mettre à jour vos informations » via un lien. Réflexe ?",
+        question: "Un courriel urgent demande de « mettre à jour vos informations » via un lien. Réflexe ?",
         options: [
           "Cliquer sur le lien",
-          "Aller sur le site officiel sans passer par l'email"
+          "Aller sur le site officiel sans passer par le courriel"
         ],
         correct: 1,
         explanation: "Ne passez jamais par un lien reçu pour une action sensible. Tapez l'adresse officielle vous-même.",
-        notion: "Canal officiel = vous le choisissez, pas l'email."
+        notion: "Canal officiel = vous le choisissez, pas le courriel."
       },
       {
         id: "rap3",
@@ -872,7 +872,7 @@ const QUIZZES = {
         question: "Une offre promet des gains élevés garantis sans risque. Que penser ?",
         options: [
           "C'est une belle opportunité",
-          "C'est très probablement une arnaque"
+          "C'est suspect : refuser et vérifier indépendamment"
         ],
         correct: 1,
         explanation: "Les gains élevés sans risque n'existent pas dans le monde réel des investissements.",

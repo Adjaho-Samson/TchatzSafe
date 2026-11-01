@@ -113,7 +113,7 @@
   });
   const byId = (id) => LESSONS.find((lesson) => lesson.id === id);
   byId('mots-de-passe').content.situation =
-    'Vous utilisez le même mot de passe — votre date de naissance et le nom de votre enfant — pour Facebook, votre email et votre compte sur une boutique en ligne.';
+    'Vous utilisez le même mot de passe — votre date de naissance et le nom de votre enfant — pour Facebook, votre courriel et votre compte sur une boutique en ligne.';
   byId('liens-suspects').content.reflex =
     'Retrouvez le service dans son application ou saisissez son adresse officielle. Si vous choisissez un service externe d’analyse d’URL, vérifiez ses conditions et ne transmettez aucune adresse contenant une donnée privée ou un code.';
   byId('phishing').content.points[3] =
@@ -359,7 +359,7 @@
         'Une pièce jointe inattendue doit être vérifiée indépendamment, même si elle semble venir d’un contact.',
       ],
       [
-        'Un email ne contient aucune faute. Est-il forcément légitime ?',
+        'Un courriel ne contient aucune faute. Est-il forcément légitime ?',
         [
           'Non, un message frauduleux peut être très bien rédigé',
           'Oui, les fraudeurs font toujours des fautes',

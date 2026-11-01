@@ -1,0 +1,28 @@
+{
+  "id": "./index.html",
+  "name": "TchatzSafe",
+  "short_name": "TchatzSafe",
+  "description": "Apprendre à reconnaître les menaces numériques et adopter les bons réflexes.",
+  "lang": "fr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#101114",
+  "theme_color": "#101114",
+  "orientation": "any",
+  "categories": ["education", "security"],
+  "icons": [
+    { "src": "assets/pwa/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/pwa/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    {
+      "src": "assets/pwa/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    { "name": "Formations", "short_name": "Apprendre", "url": "./apprendre.html" },
+    { "name": "Quiz", "short_name": "Quiz", "url": "./quiz.html" }
+  ]
+}

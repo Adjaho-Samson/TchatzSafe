@@ -1,5 +1,7 @@
 # Architecture et intégration backend
 
+> **Document historique.** Certains détails ont évolué en novembre 2026. Pour l’état actuel, consulter [le compte rendu](VALIDATION-2026-11.md) et [le guide de déploiement](DEPLOIEMENT-VERCEL.md).
+
 ## État réel de la livraison
 
 Cette version est un site statique HTML/CSS/JavaScript. Elle ne contient aucune fonction serveur ni API de réception, réputation, authentification ou synchronisation. Un appel à `/api/reports` n’est pas une API fonctionnelle. Les endpoints ci-dessous sont des **contrats proposés, non implémentés**.

@@ -38,3 +38,7 @@ Les URL exactes sont dans le registre et dans la page `sources.html`. Le contrô
 - Un service externe d’analyse peut recevoir l’URL soumise ; ne pas lui transmettre une adresse contenant un secret ou une donnée privée sans comprendre ses conditions.
 - Pas de statistiques d’arnaques inventées, de cas accusatoires préchargés ni de promesse de protection absolue.
 - Pas de numéro d’urgence ni de procédure judiciaire étrangère présentés comme universels.
+
+## Contrôle ponctuel complémentaire du 1er novembre 2026
+
+Les pages d’accueil du CNIN, de Cybermalveillance.gouv.fr, de la CNIL et de l’ANSSI ont été relues et étaient accessibles via l’outil de consultation web. Il s’agit d’un contrôle ponctuel de ces quatre domaines, pas d’une nouvelle vérification exhaustive de toutes les URL du registre ni d’une garantie de disponibilité future. Les procédures nationales ne sont pas interchangeables.

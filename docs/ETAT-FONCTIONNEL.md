@@ -1,5 +1,7 @@
 # État fonctionnel — version prête à tester
 
+> **Document historique.** Certains détails ont évolué en novembre 2026. Pour l’état actuel, consulter [le compte rendu](VALIDATION-2026-11.md) et [le guide de déploiement](DEPLOIEMENT-VERCEL.md).
+
 ## Opérationnel, sans backend
 
 | Fonction        | Implémentation                                                                                                                                                                                                 |

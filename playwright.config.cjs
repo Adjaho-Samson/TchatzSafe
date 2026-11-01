@@ -8,7 +8,19 @@ module.exports = defineConfig({
   fullyParallel: true,
   workers: 2,
   reporter: 'list',
-  use: { baseURL, headless: true, trace: 'retain-on-failure' },
+  use: {
+    baseURL,
+    headless: true,
+    trace: 'retain-on-failure',
+    ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+      ? {
+          launchOptions: {
+            executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
+            args: ['--no-sandbox'],
+          },
+        }
+      : {}),
+  },
   webServer: process.env.TEST_BASE_URL
     ? undefined
     : {

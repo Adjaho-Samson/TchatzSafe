@@ -2,7 +2,7 @@ const LESSONS = [
   {
     id: "phishing",
     title: "Phishing",
-    description: "Reconnaître et se protéger des tentatives d'hameçonnage par email, SMS ou message.",
+    description: "Reconnaître les signes d'hameçonnage par courriel, SMS ou message et réduire les risques.",
     category: "bases",
     duration: "8 min",
     level: "débutant",
@@ -11,7 +11,7 @@ const LESSONS = [
       question: "Que devez-vous faire en premier ?",
       explanation: "Le phishing (ou hameçonnage) consiste à se faire passer pour une organisation de confiance afin de vous pousser à cliquer sur un lien, ouvrir une pièce jointe ou communiquer des informations personnelles. Les messages urgents, les fautes d'orthographe, les expéditeurs suspects et les liens raccourcis sont des signes fréquents.",
       points: [
-        "Ne cliquez jamais sur un lien reçu par SMS ou email sans vérifier l'expéditeur.",
+        "En cas de doute, ne cliquez pas : vérifiez le message par un canal officiel indépendant, car un expéditeur peut être usurpé.",
         "Contactez le service concerné par un canal officiel (application, site web que vous tapez vous-même).",
         "Méfiez-vous de toute demande urgente de paiement ou de connexion.",
         "Les vrais services de livraison n'envoient généralement pas de liens courts non traçables."
@@ -35,13 +35,13 @@ const LESSONS = [
   {
     id: "liens-suspects",
     title: "Liens suspects",
-    description: "Identifier un lien dangereux avant de cliquer, même s'il semble légitime.",
+    description: "Repérer les indices d'un lien suspect sans présumer de sa sûreté.",
     category: "bases",
     duration: "7 min",
     level: "débutant",
     content: {
-      situation: "Un ami vous envoie sur WhatsApp : « Regarde cette vidéo de toi, c'est trop drôle ! » suivi d'un lien qui commence par https://mais qui ne ressemble pas à un site connu.",
-      question: "Comment vérifier si un lien est sûr ?",
+      situation: "Un ami vous envoie sur WhatsApp : « Regarde cette vidéo de toi ! » suivi d'un lien fictif vers https://video-partage.example, un site que vous ne connaissez pas.",
+      question: "Quels indices vérifier sans ouvrir le lien ?",
       explanation: "Un lien peut être dangereux même s'il commence par https. Les attaquants créent des pages qui imitent parfaitement des sites connus. Sur mobile, le vrai domaine est parfois masqué. Avant de cliquer, regardez attentivement l'adresse complète.",
       points: [
         "Survolez le lien (ou appuyez longuement) pour voir l'URL réelle.",
@@ -73,17 +73,17 @@ const LESSONS = [
     duration: "10 min",
     level: "débutant",
     content: {
-      situation: "Vous utilisez le même mot de passe (votre date de naissance + le nom de votre enfant) pour WhatsApp, Facebook, votre email et votre compte Mobile Money.",
+      situation: "Vous utilisez le même mot de passe (votre date de naissance + le nom de votre enfant) pour WhatsApp, Facebook, votre courriel et votre compte Mobile Money.",
       question: "Pourquoi est-ce dangereux ?",
       explanation: "Si un seul de ces services est piraté, l'attaquant peut essayer le même mot de passe partout. C'est ce qu'on appelle le credential stuffing. Un mot de passe unique et long par compte limite considérablement les dégâts.",
       points: [
-        "Un bon mot de passe fait au moins 12 caractères et mélange lettres, chiffres et symboles.",
+        "Choisissez une phrase de passe longue, unique et difficile à deviner, en respectant les exigences du service.",
         "N'utilisez jamais d'informations personnelles faciles à deviner (noms, dates, numéros de téléphone).",
         "Un gestionnaire de mots de passe (intégré au navigateur ou application dédiée) permet de ne retenir qu'un seul mot de passe maître.",
         "Activez la double authentification dès que c'est possible."
       ],
-      reflex: "Changez immédiatement les mots de passe réutilisés. Commencez par l'email et les comptes financiers.",
-      notion: "La longueur d'un mot de passe est plus importante que sa complexité. Une phrase longue et personnelle est souvent plus sûre qu'un mot court avec des symboles.",
+      reflex: "Changez immédiatement les mots de passe réutilisés. Commencez par le courriel et les comptes financiers.",
+      notion: "La longueur d'un mot de passe est plus importante que sa complexité. Une phrase de passe longue et difficile à deviner est souvent plus solide qu'un mot court avec des symboles.",
       sources: [
         {
           name: "CNIL",
@@ -106,7 +106,7 @@ const LESSONS = [
     duration: "9 min",
     level: "débutant",
     content: {
-      situation: "Vous recevez un email vous informant qu'une connexion a eu lieu depuis un autre pays. Ou pire : vos amis vous disent avoir reçu des messages étranges de votre part.",
+      situation: "Vous recevez un courriel vous informant qu'une connexion a eu lieu depuis un autre pays. Ou pire : vos amis vous disent avoir reçu des messages étranges de votre part.",
       question: "Que faire si vous suspectez que votre compte a été compromis ?",
       explanation: "Un compte compromis peut servir à arnaquer vos contacts, à récupérer d'autres accès ou à publier du contenu à votre place. Agir rapidement limite les dégâts.",
       points: [
@@ -117,7 +117,7 @@ const LESSONS = [
         "Vérifiez les appareils et applications connectés à votre compte."
       ],
       reflex: "Si vous n'arrivez plus à vous connecter, utilisez la procédure de récupération officielle du service. Ne cliquez pas sur des liens reçus par message prétendant vous aider.",
-      notion: "La plupart des vols de compte passent par un mot de passe récupéré ailleurs ou par une technique d'ingénierie sociale. La double authentification bloque la majorité des attaques automatisées.",
+      notion: "Un vol de compte peut suivre la fuite d'un mot de passe ou une manipulation. La double authentification complique certains accès, sans supprimer tous les risques.",
       sources: [
         {
           name: "Meta Security",
@@ -150,7 +150,7 @@ const LESSONS = [
         "Si votre compte est pris, contactez rapidement WhatsApp via l'application sur un autre téléphone ou le centre d'aide."
       ],
       reflex: "Le support officiel de WhatsApp ne vous demandera jamais votre code de vérification par message.",
-      notion: "La vérification en deux étapes de WhatsApp ajoute un code PIN personnel. Même si quelqu'un obtient votre SMS, il ne pourra pas finaliser la prise de contrôle sans ce PIN.",
+      notion: "La vérification en deux étapes de WhatsApp ajoute un code PIN personnel. Elle complique la prise de contrôle même si quelqu'un obtient le code SMS, sans supprimer tous les risques.",
       sources: [
         {
           name: "WhatsApp Help Center",
@@ -175,7 +175,7 @@ const LESSONS = [
     content: {
       situation: "Vous recevez un appel ou un SMS : « Votre compte Mobile Money a un problème. Donnez-nous votre code secret pour le débloquer. » Ou encore : « Vous avez gagné un concours, envoyez 500 F pour les frais de retrait. »",
       question: "Quels sont les réflexes essentiels avec le Mobile Money ?",
-      explanation: "Les arnaques liées au Mobile Money sont très répandues. Les opérateurs ne demandent jamais votre code secret par téléphone, SMS ou message. Toute personne qui le demande cherche à vider votre compte.",
+      explanation: "Les arnaques liées au Mobile Money prennent plusieurs formes. Ne communiquez jamais votre code secret à une personne qui se présente comme un agent ; contactez votre opérateur par un canal officiel indépendant.",
       points: [
         "Ne communiquez jamais votre code PIN ou code secret, même à un agent qui se présente comme employé de l'opérateur.",
         "Méfiez-vous des demandes d'argent pour « valider un gain », « débloquer un compte » ou « confirmer une transaction ».",
@@ -247,7 +247,7 @@ const LESSONS = [
         "Un service légitime explique pourquoi il a besoin d'une donnée et comment elle est protégée."
       ],
       reflex: "Avant de remplir un formulaire, demandez-vous : « Est-ce vraiment indispensable pour ce service ? »",
-      notion: "Une donnée personnelle n'est pas seulement votre nom. Votre numéro de téléphone, votre adresse email, votre photo, votre voix ou même votre adresse IP peuvent permettre de vous identifier.",
+      notion: "Une donnée personnelle n'est pas seulement votre nom. Votre numéro de téléphone, votre adresse de courriel, votre photo, votre voix ou même votre adresse IP peuvent permettre de vous identifier.",
       sources: [
         {
           name: "CNIL",
@@ -340,7 +340,7 @@ const LESSONS = [
         "Un employeur sérieux ne demande pas d'argent pour un entretien ou un recrutement.",
         "Méfiez-vous des offres trop avantageuses avec très peu d'exigences.",
         "Vérifiez l'existence de l'entreprise (site web, réseaux sociaux professionnels, adresse physique).",
-        "Ne envoyez jamais de pièce d'identité complète à un recruteur non vérifié.",
+        "N'envoyez jamais de pièce d'identité complète à un recruteur non vérifié.",
         "Les entretiens se déroulent généralement par visioconférence ou en présentiel, pas uniquement par messagerie instantanée."
       ],
       reflex: "Avant d'envoyer le moindre document ou argent, vérifiez l'entreprise de façon indépendante.",
@@ -425,7 +425,7 @@ const LESSONS = [
   {
     id: "wifi-public",
     title: "Wi-Fi public",
-    description: "Utiliser les réseaux Wi-Fi publics sans exposer ses données.",
+    description: "Réduire les risques lors de l'utilisation d'un réseau Wi-Fi public.",
     category: "reseaux",
     duration: "6 min",
     level: "débutant",
@@ -458,28 +458,28 @@ const LESSONS = [
   },
   {
     id: "emails-suspects",
-    title: "Emails suspects",
-    description: "Analyser un email avant d'ouvrir une pièce jointe ou de cliquer.",
+    title: "Courriels suspects",
+    description: "Analyser un courriel avant d'ouvrir une pièce jointe ou de cliquer.",
     category: "bases",
     duration: "7 min",
     level: "débutant",
     content: {
-      situation: "Vous recevez un email intitulé « Facture impayée – Action requise » ou « Votre colis est en attente ». L'expéditeur semble être une entreprise connue, mais l'adresse email est légèrement différente.",
-      question: "Comment vérifier un email suspect ?",
-      explanation: "Les emails de phishing imitent le style des messages officiels. L'adresse de l'expéditeur, le ton urgent et les liens sont les premiers éléments à contrôler.",
+      situation: "Vous recevez un courriel intitulé « Facture impayée – Action requise » ou « Votre colis est en attente ». L'expéditeur semble être une entreprise connue, mais l'adresse de courriel est légèrement différente.",
+      question: "Comment vérifier un courriel suspect ?",
+      explanation: "Les courriels de phishing imitent le style des messages officiels. L'adresse de l'expéditeur, le ton urgent et les liens sont les premiers éléments à contrôler.",
       points: [
-        "Regardez l'adresse email complète de l'expéditeur, pas seulement le nom affiché.",
+        "Regardez l'adresse de courriel complète de l'expéditeur, pas seulement le nom affiché.",
         "Méfiez-vous des fautes d'orthographe et de grammaire inhabituelles.",
         "Ne téléchargez pas de pièce jointe inattendue.",
         "Survolez les liens pour voir la vraie destination avant de cliquer.",
-        "En cas de doute, connectez-vous directement au site officiel sans passer par l'email."
+        "En cas de doute, connectez-vous directement au site officiel sans passer par le courriel."
       ],
       reflex: "Un service légitime vous laisse le temps de vérifier. L'urgence est souvent un outil de manipulation.",
-      notion: "L'adresse d'expédition peut être falsifiée. En cas de doute, ne répondez pas à l'email et utilisez un autre canal pour contacter l'organisation.",
+      notion: "L'adresse d'expédition peut être falsifiée. En cas de doute, ne répondez pas au courriel et utilisez un autre canal pour contacter l'organisation.",
       sources: [
         {
           name: "Cybermalveillance.gouv.fr",
-          title: "Phishing et emails frauduleux",
+          title: "Phishing et courriels frauduleux",
           url: "https://www.cybermalveillance.gouv.fr/tous-nos-contenus/fiches-reflexes/phishing-hameconnage"
         },
         {

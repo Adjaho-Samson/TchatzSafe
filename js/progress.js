@@ -33,7 +33,10 @@
   const fresh = () => ({
     version: 2,
     lessonsCompleted: [],
+    lessonCompletionDates: {},
+    lessonPositions: {},
     quizzesCompleted: {},
+    quizHistory: [],
     bestScores: {},
     notionsLearned: [],
     badges: [],
@@ -45,6 +48,16 @@
     save: (value) => root.Store.write(STORAGE_KEY, value),
     remove: () => root.Store.remove(STORAGE_KEY),
   };
+  const LESSON_SECTIONS = [
+    'objectif',
+    'exemple',
+    'comprendre',
+    'alertes',
+    'pratiques',
+    'resume',
+    'validation',
+    'sources',
+  ];
   const safeId = (id) => typeof id === 'string' && /^[a-z0-9][a-z0-9-]{0,63}$/.test(id);
   const lessonExists = (id) =>
     safeId(id) && (!root.LESSONS || root.LESSONS.some((l) => l.id === id));
@@ -91,6 +104,34 @@
       );
     if (Array.isArray(raw.lessonsCompleted))
       p.lessonsCompleted = [...new Set(raw.lessonsCompleted.filter(lessonExists))].slice(0, 200);
+    // Champs facultatifs ajoutés sans changer la clé ni le format d’export historique.
+    // Les dates inconnues des anciennes sauvegardes restent inconnues : on ne les invente pas.
+    if (
+      raw.lessonCompletionDates &&
+      typeof raw.lessonCompletionDates === 'object' &&
+      !Array.isArray(raw.lessonCompletionDates)
+    ) {
+      for (const [id, completedAt] of Object.entries(raw.lessonCompletionDates).slice(0, 200)) {
+        if (p.lessonsCompleted.includes(id) && date(completedAt))
+          p.lessonCompletionDates[id] = completedAt;
+      }
+    }
+    if (
+      raw.lessonPositions &&
+      typeof raw.lessonPositions === 'object' &&
+      !Array.isArray(raw.lessonPositions)
+    ) {
+      for (const [id, position] of Object.entries(raw.lessonPositions).slice(0, 200)) {
+        if (
+          lessonExists(id) &&
+          position &&
+          LESSON_SECTIONS.includes(position.section) &&
+          date(position.updatedAt)
+        ) {
+          p.lessonPositions[id] = { section: position.section, updatedAt: position.updatedAt };
+        }
+      }
+    }
     if (
       raw.quizzesCompleted &&
       typeof raw.quizzesCompleted === 'object' &&
@@ -129,6 +170,33 @@
             : percent;
       }
     }
+    // Les anciennes versions ne conservaient que le dernier résultat par quiz.
+    const history = Array.isArray(raw.quizHistory)
+      ? raw.quizHistory
+      : Object.entries(p.quizzesCompleted).map(([id, result]) => ({ id, ...result }));
+    for (const result of history) {
+      if (
+        !result ||
+        !quizExists(result.id) ||
+        !Number.isInteger(result.score) ||
+        !Number.isInteger(result.total) ||
+        result.total < 1 ||
+        result.total > 100 ||
+        result.score < 0 ||
+        result.score > result.total ||
+        (result.completedAt != null && !date(result.completedAt))
+      ) {
+        if (strict) throw new Error('Un élément de l’historique des quiz n’est pas valide.');
+        continue;
+      }
+      p.quizHistory.push({
+        id: result.id,
+        score: result.score,
+        total: result.total,
+        percent: Math.round((result.score / result.total) * 100),
+        completedAt: date(result.completedAt),
+      });
+    }
     if (strict && raw.lessonsCompleted.some((id) => !lessonExists(id)))
       throw new Error(
         'Le fichier contient une leçon inconnue. Import annulé pour protéger votre progression.'
@@ -153,10 +221,29 @@
     const p = get();
     if (!p.lessonsCompleted.includes(id)) {
       p.lessonsCompleted.push(id);
+      p.lessonCompletionDates[id] = new Date().toISOString();
       compute(p);
       save(p);
     }
     return get();
+  }
+  function saveLessonPosition(id, section) {
+    if (!lessonExists(id) || !LESSON_SECTIONS.includes(section))
+      throw new Error('Formation ou section inconnue.');
+    const p = get();
+    // Ne jamais écraser une sauvegarde illisible lors d’un simple défilement.
+    if (root.Store.isCorrupt?.(STORAGE_KEY)) return false;
+    p.lessonPositions[id] = { section, updatedAt: new Date().toISOString() };
+    return save(p);
+  }
+  function getResumeLesson() {
+    const p = get();
+    const latest = Object.entries(p.lessonPositions)
+      .filter(([id]) => !p.lessonsCompleted.includes(id))
+      .sort((a, b) => Date.parse(b[1].updatedAt) - Date.parse(a[1].updatedAt))[0];
+    if (!latest) return null;
+    const lesson = (root.LESSONS || []).find((item) => item.id === latest[0]);
+    return lesson ? { lesson, ...latest[1] } : null;
   }
   function saveQuizResult(id, score, total, notions = []) {
     if (
@@ -171,7 +258,9 @@
       throw new Error('Résultat de quiz invalide.');
     const p = get();
     const percent = Math.round((score / total) * 100);
-    p.quizzesCompleted[id] = { score, total, percent, completedAt: new Date().toISOString() };
+    const completedAt = new Date().toISOString();
+    p.quizzesCompleted[id] = { score, total, percent, completedAt };
+    p.quizHistory.push({ id, score, total, percent, completedAt });
     p.bestScores[id] = Math.max(p.bestScores[id] ?? 0, percent);
     for (const notion of notions)
       if (typeof notion === 'string' && notion.length <= 600 && !p.notionsLearned.includes(notion))
@@ -213,10 +302,16 @@
   }
   function getNextLesson() {
     const p = get();
-    return (root.LESSONS || []).find((l) => !p.lessonsCompleted.includes(l.id)) || null;
+    return (
+      getResumeLesson()?.lesson ||
+      (root.LESSONS || []).find((l) => !p.lessonsCompleted.includes(l.id)) ||
+      null
+    );
   }
   function getPersonalizedAdvice() {
     const p = get();
+    const resume = getResumeLesson();
+    if (resume) return `Reprenez « ${resume.lesson.title} » au chapitre où vous vous êtes arrêté.`;
     if (!p.lessonsCompleted.length && !Object.keys(p.quizzesCompleted).length)
       return 'Commencez par le phishing : une courte leçon pour apprendre à vérifier un message avant de réagir.';
     if (p.lessonsCompleted.length && !Object.keys(p.quizzesCompleted).length)
@@ -255,6 +350,9 @@
     get,
     save,
     markLessonCompleted,
+    saveLessonPosition,
+    getResumeLesson,
+    LESSON_SECTIONS,
     saveQuizResult,
     getLevelInfo,
     getOverallProgress,

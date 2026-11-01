@@ -3,6 +3,7 @@
 (function (root) {
   const memory = new Map();
   const pending = new Set();
+  const corrupt = new Set();
   let persistent = true;
   let warning = '';
   function notify(message) {
@@ -25,10 +26,16 @@
         );
         return memory.has(key) ? JSON.parse(memory.get(key)) : fallback;
       }
-      if (raw === null) return fallback;
+      if (raw === null) {
+        corrupt.delete(key);
+        return fallback;
+      }
       try {
-        return JSON.parse(raw);
+        const value = JSON.parse(raw);
+        corrupt.delete(key);
+        return value;
       } catch (_) {
+        corrupt.add(key);
         notify(
           'Certaines données locales sont illisibles. Elles n’ont pas été effacées. La plateforme reste utilisable ; vous pouvez réinitialiser la progression depuis « Ma progression ».'
         );
@@ -53,6 +60,7 @@
       memory.set(key, raw);
       try {
         root.localStorage.setItem(key, raw);
+        corrupt.delete(key);
         pending.delete(key);
         return true;
       } catch (_) {
@@ -68,6 +76,7 @@
       memory.delete(key);
       try {
         root.localStorage.removeItem(key);
+        corrupt.delete(key);
         pending.delete(key);
         return true;
       } catch (_) {
@@ -85,6 +94,7 @@
     get warning() {
       return warning;
     },
+    isCorrupt: (key) => corrupt.has(key),
     warn: notify,
   };
   root.Store = Store;

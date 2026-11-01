@@ -50,6 +50,7 @@
   window.addEventListener(
     'error',
     (event) => {
+      if (event.target?.dataset?.optional) return;
       if (event.target === window || ['SCRIPT', 'LINK'].includes(event.target?.tagName))
         showAppError();
     },
