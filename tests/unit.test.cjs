@@ -557,3 +557,50 @@ test('La CSP servie ajoute frame-ancestors sans le duplicer dans les pages', () 
     );
   }
 });
+
+test('Les chapitres et dates de formations sont ajoutés sans perdre une progression historique', () => {
+  const legacy = {
+    lessonsCompleted: ['phishing'],
+    quizzesCompleted: { debutant: { score: 2, total: 5, completedAt: '2026-10-01T12:00:00.000Z' } },
+    bestScores: { debutant: 40 },
+  };
+  const { w } = fixture({ initial: { tchatzsafe_progress: JSON.stringify(legacy) } });
+  assert.equal(w.Progress.get().lessonCompletionDates.phishing, undefined);
+  assert.equal(w.Progress.get().quizHistory.length, 1);
+  w.Progress.saveLessonPosition('mobile-money', 'pratiques');
+  assert.equal(w.Progress.getResumeLesson().lesson.id, 'mobile-money');
+  assert.equal(w.Progress.getResumeLesson().section, 'pratiques');
+  assert(w.Progress.get().lessonsCompleted.includes('phishing'));
+  w.Progress.markLessonCompleted('mobile-money');
+  assert(w.Progress.get().lessonCompletionDates['mobile-money']);
+  const saved = w.Progress.exportData();
+  w.Progress.reset();
+  w.Progress.importData(saved);
+  assert.equal(w.Progress.get().lessonPositions['mobile-money'].section, 'pratiques');
+  assert(w.Progress.get().lessonsCompleted.includes('phishing'));
+});
+
+test('Chaque essai de quiz est conservé sans modifier le calcul du meilleur score', () => {
+  const { w } = fixture();
+  w.Progress.saveQuizResult('debutant', 5, 5);
+  w.Progress.saveQuizResult('debutant', 1, 5);
+  const p = w.Progress.get();
+  assert.equal(p.quizHistory.length, 2);
+  assert.equal(p.quizHistory[0].percent, 100);
+  assert.equal(p.quizHistory[1].percent, 20);
+  assert.equal(p.quizzesCompleted.debutant.percent, 20);
+  assert.equal(p.bestScores.debutant, 100);
+  assert.equal(p.xp, 25);
+  const before = JSON.stringify(p);
+  assert.throws(() =>
+    w.Progress.importData({ ...plain(p), quizHistory: [{ id: 'inconnu', score: 5, total: 1 }] })
+  );
+  assert.equal(JSON.stringify(w.Progress.get()), before);
+});
+
+test('Le suivi automatique du chapitre ne remplace pas une sauvegarde illisible', () => {
+  const { w, data } = fixture({ initial: { tchatzsafe_progress: '{illlisible' } });
+  assert.equal(w.Progress.saveLessonPosition('phishing', 'pratiques'), false);
+  assert.equal(data.get('tchatzsafe_progress'), '{illlisible');
+  assert.throws(() => w.Progress.saveLessonPosition('phishing', 'section-inconnue'));
+});

@@ -1,5 +1,7 @@
 # Audit correctif TchatzSafe V2 — inventaire, preuves et corrections
 
+> **Document historique.** Certains détails ont évolué en novembre 2026. Pour l’état actuel, consulter [le compte rendu](VALIDATION-2026-11.md) et [le guide de déploiement](DEPLOIEMENT-VERCEL.md).
+
 Date de l'audit : **12 octobre 2026**. Branche : `arena/88b99af4-tchatzsafe`, basée sur le commit
 `aa5f20c` (« Initialisation du projet TchatzSafe »), seul commit de l'historique de ce dépôt.
 

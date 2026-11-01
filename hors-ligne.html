@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hors connexion — TchatzSafe</title>
+    <meta name="description" content="Retrouvez les contenus disponibles sur votre appareil." />
+    <meta name="theme-color" content="#101114" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src &#x27;self&#x27;; script-src &#x27;self&#x27;; style-src &#x27;self&#x27; &#x27;unsafe-inline&#x27;; img-src &#x27;self&#x27; data: blob:; font-src &#x27;self&#x27;; connect-src &#x27;self&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;self&#x27;; form-action &#x27;self&#x27;"
+    />
+    <meta property="og:title" content="Hors connexion — TchatzSafe" />
+    <meta
+      property="og:description"
+      content="Retrouvez les contenus disponibles sur votre appareil."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_BJ" />
+    <meta
+      property="og:image"
+      content="https://tchatzsafe.vercel.app/assets/illustrations/hero-vigilance.jpg"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="assets/pwa/apple-touch-icon.png" />
+    <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin />
+    <script src="js/theme-init.js"></script>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/refresh.css" />
+    <script src="js/services/storage.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/pwa.js" defer></script>
+    <script src="js/analytics.js" defer></script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Aller au contenu principal</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo" aria-label="TchatzSafe, accueil"
+          ><svg class="icon" aria-hidden="true" focusable="false">
+            <use href="assets/icons.svg#shield"></use></svg
+          ><span class="brand-word">Tchatz<span>Safe</span></span></a
+        >
+        <nav class="nav-desktop" aria-label="Navigation principale">
+          <a href="index.html" class="nav-link">Accueil</a
+          ><a href="menaces.html" class="nav-link">Menaces</a
+          ><a href="apprendre.html" class="nav-link">Apprendre</a
+          ><a href="quiz.html" class="nav-link">Quiz</a
+          ><a href="conseils.html" class="nav-link">Conseils</a>
+        </nav>
+        <div class="header-actions">
+          <a href="progression.html" class="btn btn-secondary progress-link"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#user"></use></svg
+            >Ma progression</a
+          ><button type="button" class="btn btn-secondary install-header" data-install-app>
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#install"></use></svg
+            >Installer TchatzSafe</button
+          ><a href="analyser.html" class="btn btn-primary"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#scan"></use></svg
+            >Analyser une menace</a
+          ><button
+            class="icon-button theme-toggle"
+            data-theme-toggle
+            type="button"
+            aria-label="Activer le thème clair"
+          >
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#sun"></use>
+            </svg></button
+          ><button
+            type="button"
+            class="icon-button menu-toggle"
+            aria-label="Ouvrir le menu"
+            aria-controls="mobile-menu"
+            aria-expanded="false"
+          >
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#menu"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <dialog id="mobile-menu" class="mobile-menu" aria-labelledby="mobile-menu-title">
+        <h2 id="mobile-menu-title" class="sr-only">Menu de navigation</h2>
+        <div class="mobile-menu-top">
+          <a href="index.html" class="logo" aria-label="TchatzSafe, accueil"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#shield"></use></svg
+            ><span class="brand-word">Tchatz<span>Safe</span></span></a
+          ><button type="button" class="icon-button" data-close-menu aria-label="Fermer le menu">
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#close"></use>
+            </svg>
+          </button>
+        </div>
+        <nav aria-label="Navigation mobile">
+          <a href="index.html" class="nav-link">Accueil</a
+          ><a href="menaces.html" class="nav-link">Menaces</a
+          ><a href="apprendre.html" class="nav-link">Apprendre</a
+          ><a href="quiz.html" class="nav-link">Quiz</a
+          ><a href="conseils.html" class="nav-link">Conseils</a
+          ><a href="glossaire.html" class="nav-link">Glossaire</a
+          ><a href="progression.html" class="nav-link">Ma progression</a
+          ><a href="signaler.html" class="nav-link">Signalement · démo</a>
+        </nav>
+        <div class="mobile-menu-bottom">
+          <a href="analyser.html" class="btn btn-primary btn-block"
+            ><svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#scan"></use></svg
+            >Analyser une menace</a
+          ><button
+            type="button"
+            class="btn btn-secondary btn-block mobile-install"
+            data-install-app
+          >
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="assets/icons.svg#install"></use></svg
+            >Installer TchatzSafe
+          </button>
+          <p>Gratuit. Sans compte. À votre rythme.</p>
+        </div>
+      </dialog>
+    </header>
+    <section
+      id="analytics-consent"
+      class="analytics-consent"
+      aria-labelledby="analytics-title"
+      hidden
+    >
+      <div class="container analytics-inner">
+        <div>
+          <h2 id="analytics-title" tabindex="-1">Votre choix pour la mesure d’audience</h2>
+          <p>
+            Avec votre accord, Vercel mesure les visites de façon agrégée pour nous aider à
+            améliorer le site. Aucun contenu de formulaire n’est transmis.
+            <a href="confidentialite.html#mesure-audience">En savoir plus</a>.
+          </p>
+          <p id="analytics-choice-status" class="analytics-status" role="status"></p>
+        </div>
+        <div class="analytics-actions">
+          <button type="button" class="btn btn-secondary btn-sm" data-analytics-decline>
+            Refuser</button
+          ><button type="button" class="btn btn-primary btn-sm" data-analytics-accept>
+            Autoriser
+          </button>
+        </div>
+      </div>
+    </section>
+    <div class="network-banner" id="offline-status" role="status" hidden>
+      <div class="container">
+        <svg class="icon" aria-hidden="true" focusable="false">
+          <use href="assets/icons.svg#offline"></use>
+        </svg>
+        Hors connexion : les contenus déjà mis en cache restent disponibles sur cet appareil.
+      </div>
+    </div>
+    <div class="network-banner" id="pwa-error" role="status" hidden>
+      <div class="container">
+        Le mode hors connexion n’a pas pu être activé. Le site reste utilisable en ligne.
+      </div>
+    </div>
+    <div class="update-banner" id="update-status" role="status" hidden>
+      <div class="container">
+        <p>Une nouvelle version de TchatzSafe est disponible.</p>
+        <button type="button" class="btn btn-secondary btn-sm" data-update-app>
+          Mettre à jour
+        </button>
+      </div>
+    </div>
+    <div class="storage-banner" id="storage-banner" role="status" hidden>
+      <div class="container">
+        <p></p>
+        <button type="button" class="btn btn-secondary btn-sm mt-4" data-export-session hidden>
+          Exporter la progression de cette page
+        </button>
+      </div>
+    </div>
+    <div class="storage-banner" id="app-error-banner" role="alert" hidden>
+      <div class="container">
+        <p>
+          Un élément nécessaire de la page n’a pas pu être chargé. Les interactions peuvent être
+          indisponibles. Aucun envoi de formulaire n’a eu lieu.
+        </p>
+        <button type="button" class="btn btn-secondary btn-sm mt-4" data-reload-page>
+          Actualiser la page
+        </button>
+      </div>
+    </div>
+    <noscript
+      ><div class="noscript-message">
+        Les interactions (cours, quiz et formulaires) nécessitent JavaScript. Aucun formulaire n’est
+        envoyé sans JavaScript.
+        <nav aria-label="Navigation sans JavaScript">
+          <a href="index.html">Accueil</a><a href="conseils.html">Conseils</a
+          ><a href="a-propos.html">Mission</a><a href="sources.html">Sources</a
+          ><a href="confidentialite.html">Confidentialité</a>
+        </nav>
+      </div></noscript
+    >
+    <main id="main">
+      <section class="page-content">
+        <div class="container offline-page">
+          <p class="eyebrow">CONNEXION INDISPONIBLE</p>
+          <h1>Cette page n’est pas disponible hors connexion.</h1>
+          <p>
+            Vérifiez votre connexion ou revenez à l’accueil. Les pages et formations mises en cache
+            restent accessibles sur cet appareil.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="index.html"
+              >Retour à l’accueil
+              <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#arrow"></use></svg
+            ></a>
+            <button class="btn btn-secondary" type="button" data-reload-offline>Réessayer</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo" aria-label="TchatzSafe, accueil"
+              ><svg class="icon" aria-hidden="true" focusable="false">
+                <use href="assets/icons.svg#shield"></use></svg
+              ><span class="brand-word">Tchatz<span>Safe</span></span></a
+            >
+            <p>
+              Comprendre les pièges numériques.<br />Adopter les bons réflexes, chaque jour.<br />La
+              cybersécurité, accessible à tous.
+            </p>
+            <button type="button" class="btn btn-secondary footer-install" data-install-app>
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="assets/icons.svg#install"></use></svg
+              >Installer TchatzSafe
+            </button>
+            <p class="footer-privacy">VOTRE VIE PRIVÉE COMPTE.</p>
+          </div>
+          <div class="footer-col">
+            <h2>Explorer</h2>
+            <ul>
+              <li><a href="menaces.html">Bibliothèque des menaces</a></li>
+              <li><a href="apprendre.html">Les formations</a></li>
+              <li><a href="quiz.html">Les quiz</a></li>
+              <li><a href="conseils.html">Conseils pratiques</a></li>
+              <li><a href="glossaire.html">Glossaire</a></li>
+              <li><a href="progression.html">Ma progression</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h2>TchatzSafe</h2>
+            <ul>
+              <li><a href="a-propos.html">Notre mission</a></li>
+              <li><a href="analyser.html">Analyseur · démo</a></li>
+              <li><a href="signaler.html">Signalement · démo</a></li>
+              <li><a href="sources.html">Sources et fiabilité</a></li>
+              <li><a href="confidentialite.html">Confidentialité</a></li>
+              <li><a href="moderation.html">Modération · démo locale</a></li>
+            </ul>
+            <button class="footer-settings" type="button" data-analytics-settings>
+              Gérer la mesure d’audience
+            </button>
+          </div>
+          <div class="footer-col">
+            <h2>Sources utiles</h2>
+            <ul>
+              <li>
+                <a
+                  href="https://www.cybermalveillance.gouv.fr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Cybermalveillance.gouv.fr<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+              <li>
+                <a href="https://www.cnil.fr/" target="_blank" rel="noopener noreferrer"
+                  >CNIL<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+              <li>
+                <a href="https://cyber.gouv.fr/" target="_blank" rel="noopener noreferrer"
+                  >ANSSI<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+              <li>
+                <a href="https://www.cnin.bj/" target="_blank" rel="noopener noreferrer"
+                  >CNIN · Bénin<svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+              <li>
+                <a href="https://vercel.com/dashboard" target="_blank" rel="noopener noreferrer"
+                  >Statistiques · accès Vercel<svg
+                    class="icon"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <use href="assets/icons.svg#external"></use></svg
+                  ><span class="sr-only"> (nouvel onglet)</span></a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            Un outil éducatif, pas une garantie de sécurité. En cas d’incident, contactez le service
+            concerné ou l’autorité compétente de votre pays.
+          </p>
+          <p>Copyright <span data-year>2026</span> TchatzSafe</p>
+        </div>
+      </div>
+    </footer>
+    <dialog class="modal" id="install-dialog" aria-labelledby="install-title">
+      <h2 id="install-title">Installer TchatzSafe</h2>
+      <p id="install-instructions"></p>
+      <p>
+        Le mode hors connexion fonctionne pour les contenus que votre navigateur a pu mettre en
+        cache.
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" type="button" data-close-install>Fermer</button>
+      </div>
+    </dialog>
+  </body>
+</html>

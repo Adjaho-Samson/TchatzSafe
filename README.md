@@ -1,123 +1,61 @@
-# TchatzSafe — refonte V2
+# TchatzSafe
 
-**Les arnaques évoluent. Votre vigilance aussi.**
+Plateforme francophone de sensibilisation à la cybersécurité, pensée notamment pour le Bénin et l’Afrique francophone. Le site existant reste une application statique HTML, CSS et JavaScript : aucun compte ni serveur applicatif n’est nécessaire à l’apprentissage.
 
-Plateforme de sensibilisation à la cybersécurité destinée au grand public, notamment aux utilisateurs de smartphones, messageries et Mobile Money en Afrique. Refonte du dépôt existant, pas remplacement par un framework générique.
+## Ce qui fonctionne
 
-## Ce qui fonctionne réellement
+- 17 formations, 20 quiz, six fiches de menaces, recherche, filtres et sources ; les anciens identifiants et liens restent utilisables.
+- Progression et badges pédagogiques sur l’appareil, reprise par chapitre, historique des formations et de chaque nouveau quiz, export/import et réinitialisation explicites. Une ancienne progression reste lisible ; les dates historiques inconnues ne sont pas inventées.
+- Analyseur syntaxique et heuristique local : il explique des indices, n’ouvre pas les liens soumis et ne peut pas prouver qu’un contenu est sûr ou frauduleux.
+- Signalement sous forme de **brouillon local consenti** : aucun envoi à une équipe, aucune base publique et aucune modération centralisée. `moderation.html` est un atelier local, pas un espace d’administration protégé.
+- Application web installable : manifest, icônes, service worker, cache des pages et ressources essentielles, page de secours et mise à jour proposée à l’utilisateur. Un premier accès en ligne réussi est nécessaire pour constituer le cache.
+- Mesure d’audience Vercel **facultative**, chargée uniquement après accord. Les métriques sont consultées dans le tableau de bord Vercel authentifié, non dans une page publique du site. Leur activation réelle nécessite l’accès au projet Vercel ; voir [Déploiement et statistiques](docs/DEPLOIEMENT-VERCEL.md).
 
-- Accueil responsive noir/rouge/gris, navigation clavier, menu mobile, thème clair/sombre conservé, animations réduites selon la préférence système.
-- **17 formations** en trois niveaux : 10 débutant, 5 intermédiaire, 2 avancé. Objectifs, exemples fictifs, explications, alertes, bonnes pratiques, résumés, sources et quiz.
-- **20 quiz** interactifs avec options mélangées, explications et sauvegarde locale. Les 12 quiz historiques sont conservés et les cours auparavant sans quiz disposent désormais d’une validation.
-- **6 fiches de menaces** sourcées : Mobile Money, faux emplois, phishing, faux investissements, faux comptes, liens suspects.
-- Progression sur l’appareil, XP/badges historiques, export/import JSON validé et suppression confirmée. Clé V1 et identifiants conservés. En cas de quota/blocage du stockage, l’alerte permet d’exporter directement la progression de la page avant de naviguer.
-- Les 6 conseils en dépliants, leurs liens profonds et les 13 définitions du glossaire sont conservés.
-- Sources, mission et politique de confidentialité accessibles.
+L’application ne promet ni protection absolue ni assistance d’urgence. Les procédures et recours varient selon le service et le pays ; au Bénin, consulter les canaux officiels, notamment le [CNIN](https://www.cnin.bj/).
 
-Contrôles réellement exécutés le **12 octobre 2026** : **36/36 tests unitaires**, contrôle structurel (14 pages, 964 références locales, 17 cours, 20 quiz, 6 fiches), `npm audit` **0 vulnérabilité**, génération déterministe et conformité AA des contrastes vérifiée par calcul — le tout dans l’environnement d’audit (Node 22.22.3, Python 3.11.2). Les **92 tests navigateur** (Chromium, axe-core WCAG 2.1 AA, responsive, clavier, formulaires) n’étaient pas exécutables localement faute de navigateur ; ils ont été **validés par la CI GitHub** sur la pull request #1, étape `npm run test:e2e` en succès en 1 min 25 s (run `38308129681`). Safari, Firefox, les lecteurs d’écran et les appareils physiques restent à tester manuellement. Détails, conditions et limites dans `docs/TESTS.md` ; inventaire des défauts corrigés et preuves dans `docs/AUDIT-CORRECTIF-V2.md`.
+## Développer et vérifier
 
-## Ce qui est une démonstration
-
-| Module          | État exact                                                                                                                                        |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Analyseur       | Lecture de règles **locales**, pas un moteur de sécurité. Ne visite aucun lien. Ne détermine aucun risque réel et ne déclare jamais une URL sûre. |
-| Signalement     | Formulaire validé et **brouillons privés consentis** sur ce navigateur. Aucun envoi à TchatzSafe ni dépôt de plainte.                             |
-| Preuves         | Prévisualisation locale, PNG/JPEG/WebP ≤ 5 Mo. Aucun fichier ni nom conservé ou envoyé.                                                           |
-| Modération      | **Atelier local non authentifié**, affichant seulement les brouillons du navigateur. Statuts simulés, aucun fait vérifié ni publication.          |
-| Synchronisation | **Non disponible** : pas de compte ni API. Un adaptateur et les contrats d’évolution sont documentés.                                             |
-
-Les principes de confidentialité et les limites apparaissent également dans l’interface. Ne mettez pas les démonstrations en avant comme des services de réputation, de signalement réel ou d’administration sécurisée.
-
-## Lancer et tester
-
-Aucune dépendance n’est nécessaire pour servir le site déjà généré.
+Prérequis : Node.js 22, npm et Python 3. Les dépendances npm sont destinées au développement, à la génération et aux tests ; le site n’utilise pas de bibliothèque JavaScript distante obligatoire à l’exécution.
 
 ```bash
-# Node.js 20+
-npm run dev
-# http://localhost:3000 — serveur lié à 0.0.0.0
-
-# Alternative statique (Python 3)
-python3 -m http.server 3000 --bind 0.0.0.0
-```
-
-Le serveur fourni avec `npm run dev` bloque `.git`, les outils, templates et tests. L’alternative Python est destinée au développement local et ne doit pas être exposée telle quelle comme serveur de production.
-
-```bash
-# Outillage de développement uniquement
 npm ci
-npm run generate   # Python 3 : shell partagé + icônes, puis formatage
-npm run check      # pages, références locales, données et routes
-npm test           # tests unitaires
+npm run generate      # pages, sprite Font Awesome et service worker versionné
+npm run check         # structure et références locales
+npm test              # tests unitaires
 npx playwright install --with-deps chromium
-npm run test:e2e   # démarre un serveur de test temporaire
+npm run test:e2e      # parcours navigateur, responsive et accessibilité automatisée
+npm run dev           # http://localhost:3000
 ```
 
-La suite navigateur peut utiliser un serveur déjà lancé :
+Le serveur local écoute sur `0.0.0.0:3000`. Il sert uniquement des fichiers statiques : il ne reproduit ni le collecteur Analytics ni les en-têtes de production Vercel. Les tests Playwright peuvent utiliser un Chromium existant via `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` ; sans cette variable ils utilisent celui installé par Playwright.
 
-```bash
-TEST_BASE_URL=http://127.0.0.1:3000 npm run test:e2e
-```
+Après toute modification du contenu, des styles, des scripts, du manifest ou des assets, exécuter `npm run generate` puis versionner les fichiers générés. Ne pas modifier seulement les HTML racine ou `sw.js` : leurs sources sont les templates et outils ci-dessous. Le workflow CI vérifie leur cohérence.
 
-L’URL localhost est réservée à l’outillage de test dans la machine. Le frontend ne l’utilise jamais pour appeler un backend.
+## Organisation
 
-## Structure
+| Chemin                                                | Rôle                                                                                              |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `templates/pages/`, `tools/build-pages.py`            | Contenus et génération des pages HTML, du shell, de la navigation et des métadonnées.             |
+| `js/data/`                                            | Formations, quiz, fiches, sources et enrichissement du parcours, avec les identifiants existants. |
+| `js/progress.js`, `js/pages/`, `js/services/`         | Progression locale, interfaces, stockage et règles de l’analyseur.                                |
+| `manifest.webmanifest`, `assets/pwa/`, `js/pwa.js`    | Installation, indications par appareil et état de connexion.                                      |
+| `tools/sw-template.js`, `tools/build-sw.mjs`, `sw.js` | Génération du service worker, cache versionné et mises à jour.                                    |
+| `js/analytics.js`                                     | Consentement et réduction des données de Vercel Web Analytics.                                    |
+| `tools/build-icons.cjs`, `assets/icons.svg`           | Sprite d’icônes Font Awesome Free ; licence dans `assets/FONT-AWESOME-LICENSE.txt`.               |
+| `css/refresh.css`                                     | Refonte visuelle noire et rouge, composants et adaptation mobile.                                 |
+| `tests/`, `tools/check.mjs`                           | Tests unitaires, Playwright et vérifications structurelles.                                       |
 
-```text
-index.html, apprendre.html, quiz.html, conseils.html,
-glossaire.html, progression.html, a-propos.html  # routes V1 conservées
-menaces.html, analyser.html, signaler.html,
-moderation.html, sources.html, confidentialite.html, 404.html
-css/                 # fichiers historiques, tokens et composants centralisés
-js/data/             # cours/quiz/glossaire V1, enrichissement et sources
-js/pages/            # interactions par page
-js/services/         # stockage, règles locales et brouillons
-js/components.js     # cartes et illustrations partagées
-js/main.js           # navigation, thème, utilitaires
-assets/              # SVG et polices locales avec licences
-templates/pages/     # contenu statique maintenable
-tools/build-pages.py # header/footer partagés ; HTML généré versionné
-tests/               # unitaires + Playwright + axe
-.github/workflows/   # contrôle qualité prévu sur push/PR
-```
+## Confidentialité et stockage
 
-### Modifier le projet
+La progression et les brouillons restent dans le stockage du navigateur, sans synchronisation entre appareils. La suppression des données du navigateur peut les effacer ; exporter la progression si nécessaire. Les brouillons ne figurent pas dans cet export. Si le stockage est refusé ou saturé, une alerte explique le repli en mémoire pour la session. Une sauvegarde illisible n’est pas remplacée automatiquement par le suivi de lecture.
 
-- Contenu d’une page : `templates/pages/<page>.html`, puis `npm run generate`.
-- Navigation/footer : `tools/build-pages.py`.
-- Design : `css/variables.css`, puis composants/style/responsive.
-- Les identifiants historiques sont dans `lessons.js` et `quizzes.js`. Leur enrichissement est dans `curriculum.js` ; les changements pédagogiques ne suppriment pas les contenus V1.
-- Références : `js/data/sources.js`. Vérifier les liens à chaque revue ; les exemples n’établissent jamais un cas de fraude réelle.
-
-## Déploiement et GitHub
-
-Le dépôt public audité est `https://github.com/Adjaho-Samson/TchatzSafe`. Sa branche principale existante est **master**. L’historique initial est conservé.
-
-Servir les pages à la racine, sans backend. Vercel : preset « Other », pas de build obligatoire, output `.`. Les pages générées sont déjà incluses. Ne pas activer une API de collecte sans satisfaire les préconditions documentées.
-
-Les en-têtes de sécurité sont définis dans `vercel.json` : `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options: DENY`, `Strict-Transport-Security` et une CSP incluant `frame-ancestors 'none'`. Cette dernière directive est **ignorée par les navigateurs dans une balise `<meta>`** : elle ne figure donc que dans l’en-tête HTTP, et les pages portent la même CSP sans `frame-ancestors`. `npm run check` vérifie cette cohérence pour les 14 pages. Après déploiement, contrôlez les en-têtes réellement servis (`curl -sI https://tchatzsafe.vercel.app/`). Le serveur de développement `tools/server.mjs` n’applique volontairement pas `X-Frame-Options`, pour rester affichable dans un aperçu intégré.
-
-**Une copie locale/une archive/une préparation de commit ne constitue pas un push GitHub.** La publication distante nécessite un accès d’écriture authentifié. Aucun mot de passe ou jeton ne doit être envoyé dans le chat.
-
-La procédure de reprise et publication se trouve dans [docs/PUBLICATION.md](docs/PUBLICATION.md). Le statut réel de la livraison et des vérifications se trouve dans [docs/TESTS.md](docs/TESTS.md).
+Analytics ne charge pas son script avant consentement, respecte GPC et Do Not Track, ne transmet pas les paramètres/fragments de l’URL et réduit le référent à son origine. Il n’envoie aucun contenu de formulaire ni événement personnalisé. Vercel utilise toutefois un identifiant haché éphémère dérivé des requêtes pour estimer les visiteurs ; ce mécanisme et les obligations locales de confidentialité doivent être évalués avant activation. Voir la [politique du site](templates/pages/confidentialite.html) et le [guide Vercel](docs/DEPLOIEMENT-VERCEL.md).
 
 ## Documentation
 
-- [Audit initial et plan priorisé](docs/AUDIT-ET-PLAN.md)
-- [Audit correctif : inventaire, preuves et corrections](docs/AUDIT-CORRECTIF-V2.md)
-- [Architecture, contrats API et préconditions backend](docs/ARCHITECTURE-ET-API.md)
-- [Fonctionnalités opérationnelles et limites](docs/ETAT-FONCTIONNEL.md)
-- [Vérifications exécutées](docs/TESTS.md)
-- [Publication](docs/PUBLICATION.md)
+- [Audit avant intervention](docs/AUDIT-2026-11.md)
+- [Déploiement Vercel et accès administrateur](docs/DEPLOIEMENT-VERCEL.md)
+- [Compte rendu et validation](docs/VALIDATION-2026-11.md)
+- [Revue des sources pédagogiques](docs/REVUE-SOURCES.md)
 
-## Précautions
-
-Le localStorage n’est pas un coffre chiffré. Une personne ayant accès au même profil de navigateur peut lire les brouillons. Ils expirent après 30 jours lors de la prochaine lecture ; la suppression ne peut pas s’effectuer lorsque le navigateur est fermé.
-
-Les données de progression sont liées à l’origine du site. Un aperçu de développement ne voit pas les données de votre domaine Vercel. Utilisez l’export/import si vous changez de domaine.
-
-TchatzSafe est éducatif. Les résultats de quiz et les badges ne sont pas une certification. Les références étrangères expliquent des principes généraux : leurs lois, contacts et procédures ne s’appliquent pas automatiquement au Bénin ou à un autre pays.
-
-## Licences
-
-Les fichiers de polices sont distribués avec leurs licences OFL dans `assets/fonts/`. Les illustrations et icônes de la refonte sont des SVG produits pour ce projet. Le dépôt V1 ne déclarait pas de licence logicielle explicite : cette refonte n’en attribue pas arbitrairement une. Vérifiez les droits applicables avant redistribution.
+Les documents plus anciens restent conservés comme historique ; en cas de divergence, se référer aux documents de novembre 2026.

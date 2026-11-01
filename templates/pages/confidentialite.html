@@ -2,7 +2,7 @@
   <div class="container">
     <p class="eyebrow">CONFIDENTIALITÉ</p>
     <h1>Vos données.<br />Des limites clairement expliquées.</h1>
-    <p>Politique de la version statique de TchatzSafe. Dernière mise à jour : 12 octobre 2026.</p>
+    <p>Politique de la version statique de TchatzSafe. Dernière mise à jour : 1er novembre 2026.</p>
   </div>
 </div>
 <section class="page-content">
@@ -10,8 +10,9 @@
     <h2>1. Ce qui reste sur votre appareil</h2>
     <ul>
       <li>La préférence de thème : clé <code>tchatzsafe_theme</code>.</li>
+      <li>Votre choix relatif à la mesure d’audience : clé <code>tchatzsafe_analytics_choice</code>.</li>
       <li>
-        Les leçons étudiées, résultats de quiz, meilleurs scores, notions et badges : clé historique
+        Les chapitres de reprise, leçons étudiées, résultats de quiz, meilleurs scores, notions et badges : clé historique
         <code>tchatzsafe_progress</code>.
       </li>
       <li>
@@ -58,18 +59,20 @@
       </button>
     </div>
     <p id="privacy-message" class="data-message" role="status"></p>
-    <h2>4. Hébergement et ressources externes</h2>
+    <h2 id="mesure-audience">4. Hébergement et mesure d’audience facultative</h2>
     <p>
-      Le chargement du site implique des requêtes vers l’hébergeur, qui peut traiter des
-      informations techniques comme votre adresse IP, l’agent utilisateur et les fichiers demandés.
-      Aucun outil publicitaire, mesure d’audience ou police chargée depuis un CDN n’est intégré à
-      cette version. Les polices et illustrations sont servies avec le site.
+      L’hébergeur peut traiter les informations techniques nécessaires pour servir le site, notamment l’adresse IP, le navigateur et les fichiers demandés. Les polices et les icônes sont hébergées avec le site.
     </p>
     <p>
-      Les liens vers nos sources n’envoient pas votre saisie : ils ouvrent simplement le site
-      choisi, à votre initiative. Ce site applique sa propre politique de confidentialité. Ne copiez
-      jamais une donnée privée dans un service d’analyse externe sans vérifier ses conditions et
-      consentir explicitement à cette transmission.
+      Avec votre accord, TchatzSafe peut utiliser Vercel Web Analytics pour mesurer les pages consultées, les tendances de fréquentation, les provenances générales et les types d’appareils. Le script n’est pas chargé avant votre accord ; vous pouvez le refuser ou revenir sur votre choix à tout moment. Aucun contenu saisi dans les formulaires, aucun mot de passe et aucun paramètre ou fragment d’URL ne sont envoyés par notre intégration. Pour la provenance, seule l’origine du site référent est conservée, sans son chemin ni ses paramètres.
+    </p>
+    <p>
+      Selon Vercel, cette mesure n’utilise pas de cookies tiers. Pour estimer les visiteurs, Vercel crée à partir de la requête un identifiant technique haché, écarté après 24 heures. TchatzSafe n’ajoute pas d’identifiant personnel ni de suivi persistant. Les chiffres ne représentent donc pas nécessairement des personnes distinctes sur plusieurs jours. Le signal GPC ou Do Not Track de votre navigateur empêche également le chargement de cette mesure. Vercel peut traiter des informations techniques telles que la page, le pays ou la région, le navigateur et le type d’appareil. Consultez la <a href="https://vercel.com/docs/analytics/privacy-policy" target="_blank" rel="noopener noreferrer">documentation de Vercel sur la confidentialité<span class="sr-only"> (nouvel onglet)</span></a>.
+    </p>
+    <button class="btn btn-secondary" type="button" data-analytics-settings>Modifier mon choix de mesure d’audience</button>
+    <p>Les statistiques sont consultables dans le tableau de bord Vercel uniquement par les personnes disposant des droits sur le projet. Elles ne sont pas affichées publiquement sur ce site.</p>
+    <p>
+      Les liens vers nos sources n’envoient pas votre saisie : ils ouvrent simplement le site choisi, à votre initiative. Chaque site applique sa propre politique de confidentialité.
     </p>
     <h2>5. Signalements et protection contre les abus</h2>
     <p>
@@ -85,19 +88,14 @@
     </p>
     <h2>6. Avant une version connectée</h2>
     <p>
-      Le responsable du traitement, son contact, les finalités, bases légales, destinataires,
-      droits, durées et modalités de recours devront être renseignés et validés selon les pays
-      concernés avant tout déploiement d’une API collectant des données. Cette page ne constitue pas
-      une promesse de conformité d’un backend qui n’existe pas.
+      Le responsable du traitement et ses coordonnées doivent être renseignés par l’éditeur du site. Les finalités, bases légales, destinataires, droits, durées de conservation et modalités de recours doivent être vérifiés selon les pays concernés avant l’activation de la mesure d’audience ou de tout service connecté. Cette page ne constitue pas une garantie de conformité juridique.
     </p>
     <div class="notice neutral">
       <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#lock"></use></svg>
       <div>
         <strong>Pas d’envoi caché.</strong>
         <p>
-          Dans cette version, aucun endpoint de réception ou service tiers d’analyse n’est
-          configuré. Le navigateur n’est pas autorisé à effectuer des connexions API par la
-          politique CSP du site.
+          Les contenus de l’analyseur et des brouillons ne sont pas envoyés. La mesure d’audience Vercel est facultative et ne charge son script qu’après votre accord.
         </p>
       </div>
     </div>

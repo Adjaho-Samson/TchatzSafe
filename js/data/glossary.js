@@ -17,7 +17,7 @@ const GLOSSARY = [
   },
   {
     term: "Donnée personnelle",
-    definition: "Toute information qui permet de vous identifier, directement ou indirectement : nom, prénom, numéro de téléphone, adresse email, photo, date de naissance, adresse IP, etc."
+    definition: "Toute information qui permet de vous identifier, directement ou indirectement : nom, prénom, numéro de téléphone, adresse de courriel, photo, date de naissance, adresse IP, etc."
   },
   {
     term: "Double authentification",
@@ -41,7 +41,7 @@ const GLOSSARY = [
   },
   {
     term: "Phishing",
-    definition: "Technique d'attaque qui consiste à envoyer un message (email, SMS, message instantané) imitant un service de confiance pour vous pousser à révéler des informations ou à cliquer sur un lien dangereux."
+    definition: "Technique d'attaque qui consiste à envoyer un message (courriel, SMS, message instantané) imitant un service de confiance pour vous pousser à révéler des informations ou à cliquer sur un lien dangereux."
   },
   {
     term: "VPN",
