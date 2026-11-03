@@ -86,22 +86,23 @@
     )
       return;
     started = true;
-    window.va =
-      window.va ||
-      function () {
-        (window.vaq = window.vaq || []).push(arguments);
-      };
-    window.va('beforeSend', sanitize);
-    const script = document.createElement('script');
-    script.src = '/_vercel/insights/script.js';
-    script.defer = true;
-    script.dataset.optional = 'analytics';
-    // Cette route est fournie par Vercel après activation ; son absence ne bloque jamais le site.
-    script.addEventListener('error', () => {
-      started = false;
-      script.remove();
-    });
-    document.head.appendChild(script);
+    // Le paquet @vercel/analytics (build générique embarqué dans js/vendor) initialise la
+    // file window.va, enregistre le rappel beforeSend et injecte /_vercel/insights/script.js.
+    import('./vendor/vercel-analytics.mjs')
+      .then(({ inject }) => {
+        inject({ beforeSend: sanitize });
+        const script = document.head.querySelector('script[src="/_vercel/insights/script.js"]');
+        if (!script) return;
+        script.dataset.optional = 'analytics';
+        // Cette route est fournie par Vercel après activation ; son absence ne bloque jamais le site.
+        script.addEventListener('error', () => {
+          started = false;
+          script.remove();
+        });
+      })
+      .catch(() => {
+        started = false;
+      });
   }
   document.addEventListener('DOMContentLoaded', () => {
     const banner = document.getElementById('analytics-consent');
